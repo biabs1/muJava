@@ -57,7 +57,7 @@ public class ASRS_Writer extends TraditionalMutantCodeWriter
          // -----------------------------------------------------------
          mutated_line = line_num;
          String log_str = p.toString() + " => " + assign_mutant.toString();
-         writeLog(removeNewline(log_str));
+         writeLog(removeNewline(appendTargetInfo(p, log_str)));
          // -------------------------------------------------------------
       }
       else

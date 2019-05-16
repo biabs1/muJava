@@ -74,7 +74,7 @@ public class COI_Writer extends TraditionalMutantCodeWriter
          // -----------------------------------------------------------
          mutated_line = line_num;
          String log_str = p.toFlattenString()+ "  =>  " +"!("+p.toString()+")";
-         writeLog(removeNewline(log_str));
+         writeLog(removeNewline(appendTargetInfo(p, log_str)));
          // -------------------------------------------------------------
       } 
       else
@@ -94,7 +94,7 @@ public class COI_Writer extends TraditionalMutantCodeWriter
          // -----------------------------------------------------------
          mutated_line = line_num;
          String log_str = p.toFlattenString()+ "  =>  " +"!"+p.toString();
-         writeLog(removeNewline(log_str));
+         writeLog(removeNewline(appendTargetInfo(p, log_str)));
          // -------------------------------------------------------------
       }
       else
@@ -114,7 +114,7 @@ public class COI_Writer extends TraditionalMutantCodeWriter
          // -----------------------------------------------------------
          mutated_line = line_num;
          String log_str = p.toFlattenString()+ "  =>  " +"!"+p.toString();
-         writeLog(removeNewline(log_str));
+         writeLog(removeNewline(appendTargetInfo(p, log_str)));
          // -------------------------------------------------------------
       }
       else

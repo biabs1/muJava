@@ -25,6 +25,7 @@ package mujava.op.util;
 
 import java.io.*;
 import mujava.MutationSystem;
+import openjava.ptree.ParseTree;
 
 
 public class TraditionalMutantCodeWriter extends MutantCodeWriter{
@@ -49,6 +50,12 @@ public class TraditionalMutantCodeWriter extends MutantCodeWriter{
 	    + mutated_line+MutationSystem.LOG_IDENTIFIER
       + method_signature + MutationSystem.LOG_IDENTIFIER
       +changed_content);
+    }
+
+    protected static String appendTargetInfo(ParseTree p, String content) {
+        return p.getObjectID() + MutationSystem.LOG_IDENTIFIER +
+                p.getClass().getSimpleName() + MutationSystem.LOG_IDENTIFIER
+                + content;
     }
 
 }

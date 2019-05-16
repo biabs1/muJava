@@ -148,7 +148,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 	         // -----------------------------------------------------------
 	         mutated_line = line_num;
 	         String log_str = p.toFlattenString()+ "  =>  " + mutant.toFlattenString();
-	         writeLog(removeNewline(log_str));
+	         writeLog(removeNewline(appendTargetInfo(p, log_str)));
 	         // -------------------------------------------------------------
 	      }
 	      else
@@ -163,7 +163,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 		         // -----------------------------------------------------------
 		         mutated_line = line_num;
 		         String log_str = p.toFlattenString()+ "  =>  " + mutantBoolean.toFlattenString();
-		         writeLog(removeNewline(log_str));
+		         writeLog(removeNewline(appendTargetInfo(p, log_str)));
 		         // -------------------------------------------------------------
 		      }
 		      else
@@ -183,7 +183,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 	         // -----------------------------------------------------------
 	         mutated_line = line_num;
 	         String log_str = p.toFlattenString()+ "  =>  " + mutantTry.toFlattenString();
-	         writeLog(removeNewline(log_str));
+	         writeLog(removeNewline(appendTargetInfo(p, log_str)));
 	         // -------------------------------------------------------------
 	      }
 	      else
@@ -198,7 +198,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 		         // -----------------------------------------------------------
 		         mutated_line = line_num;
 		         String log_str = p.toFlattenString()+ "  =>  " + mutantBoolean.toFlattenString();
-		         writeLog(removeNewline(log_str));
+		         writeLog(removeNewline(appendTargetInfo(p, log_str)));
 		         // -------------------------------------------------------------
 		      }
 		      else
@@ -218,7 +218,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 	         // -----------------------------------------------------------
 	         mutated_line = line_num;
 	         String log_str = p.toFlattenString()+ "  =>  " + mutantIf.toFlattenString();
-	         writeLog(removeNewline(log_str));
+	         writeLog(removeNewline(appendTargetInfo(p, log_str)));
 	         // -------------------------------------------------------------
 	      }
 	      else
@@ -233,7 +233,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 		         // -----------------------------------------------------------
 		         mutated_line = line_num;
 		         String log_str = p.toFlattenString()+ "  =>  " + mutantBoolean.toFlattenString();
-		         writeLog(removeNewline(log_str));
+		         writeLog(removeNewline(appendTargetInfo(p, log_str)));
 		         // -------------------------------------------------------------
 		      }
 		      else
@@ -252,7 +252,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 	         // -----------------------------------------------------------
 	         mutated_line = line_num;
 	         String log_str = p.toFlattenString()+ "  =>  " + mutantWhile.toFlattenString();
-	         writeLog(removeNewline(log_str));
+	         writeLog(removeNewline(appendTargetInfo(p, log_str)));
 	         // -------------------------------------------------------------
 	      }
 	      else
@@ -267,7 +267,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 		         // -----------------------------------------------------------
 		         mutated_line = line_num;
 		         String log_str = p.toFlattenString()+ "  =>  " + mutantBoolean.toFlattenString();
-		         writeLog(removeNewline(log_str));
+		         writeLog(removeNewline(appendTargetInfo(p, log_str)));
 		         // -------------------------------------------------------------
 		      }
 		      else
@@ -287,7 +287,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 	         // -----------------------------------------------------------
 	         mutated_line = line_num;
 	         String log_str = p.toFlattenString()+ "  =>  " + mutantFor.toFlattenString();
-	         writeLog(removeNewline(log_str));
+	         writeLog(removeNewline(appendTargetInfo(p, log_str)));
 	         // -------------------------------------------------------------
 	      }
 	      else
@@ -302,7 +302,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 		         // -----------------------------------------------------------
 		         mutated_line = line_num;
 		         String log_str = p.toFlattenString()+ "  =>  " + mutantBoolean.toFlattenString();
-		         writeLog(removeNewline(log_str));
+		         writeLog(removeNewline(appendTargetInfo(p, log_str)));
 		         // -------------------------------------------------------------
 		      }
 		      else
@@ -321,7 +321,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 	         // -----------------------------------------------------------
 	         mutated_line = line_num;
 	         String log_str = p.toFlattenString()+ "  =>  " + mutantReturn.toFlattenString();
-	         writeLog(removeNewline(log_str));
+	         writeLog(removeNewline(appendTargetInfo(p, log_str)));
 	         // -------------------------------------------------------------
 	      }
 	      else
@@ -336,7 +336,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 		         // -----------------------------------------------------------
 		         mutated_line = line_num;
 		         String log_str = p.toFlattenString()+ "  =>  " + mutantBoolean.toFlattenString();
-		         writeLog(removeNewline(log_str));
+		         writeLog(removeNewline(appendTargetInfo(p, log_str)));
 		         // -------------------------------------------------------------
 		      }
 		      else
@@ -355,7 +355,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 	         // -----------------------------------------------------------
 	         mutated_line = line_num;
 	         String log_str = p.toFlattenString()+ "  =>  " + mutantCase.toFlattenString();
-	         writeLog(removeNewline(log_str));
+	         writeLog(removeNewline(appendTargetInfo(p, log_str)));
 	         // -------------------------------------------------------------
 	      }
 	      else
@@ -370,7 +370,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 		         // -----------------------------------------------------------
 		         mutated_line = line_num;
 		         String log_str = p.toFlattenString()+ "  =>  " + mutantBoolean.toFlattenString();
-		         writeLog(removeNewline(log_str));
+		         writeLog(removeNewline(appendTargetInfo(p, log_str)));
 		         // -------------------------------------------------------------
 		      }
 		      else

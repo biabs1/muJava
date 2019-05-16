@@ -11,3 +11,10 @@ LICENSE
 
 .idea
 target
+classes
+result
+testset
+
+
+mujava.config
+examples
