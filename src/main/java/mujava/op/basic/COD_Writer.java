@@ -54,12 +54,20 @@ public class COD_Writer extends TraditionalMutantCodeWriter
          // -----------------------------------------------------------
          mutated_line = line_num;
          String log_str = p.toString() + " => " + p.getExpression().toString();
-         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId())));
          // -------------------------------------------------------------
       }
       else
       {
          super.visit(p);
       }
+   }
+
+   private String getLabel() {
+      return "COD exp";
+   }
+
+   private String getOriginalId() {
+      return "!exp";
    }
 }

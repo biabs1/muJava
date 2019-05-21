@@ -152,10 +152,11 @@ private void aorMutantGen(BinaryExpression exp)
       f_name = getSourceName("VDL");
       String mutant_dir = getMuantID("VDL");
 
-      try 
+
+      try
       {
 		 PrintWriter out = getPrintWriter(f_name);
-		 ODL_Writer writer = new ODL_Writer(mutant_dir, out);
+		 VDL_Writer writer = new VDL_Writer(mutant_dir, out);
 		 writer.setMutant(original, mutant);
          writer.setMethodSignature(currentMethodSignature);
 		 comp_unit.accept( writer );
@@ -183,7 +184,7 @@ private void aorMutantGen(BinaryExpression exp)
 	       try 
 	       {
 	 		 PrintWriter out = getPrintWriter(f_name);
-	 		 ODL_Writer writer = new ODL_Writer(mutant_dir, out);
+	 		 VDL_Writer writer = new VDL_Writer(mutant_dir, out);
 	 		 writer.setMutant(original, mutant);
 	          writer.setMethodSignature(currentMethodSignature);
 	 		 comp_unit.accept( writer );
@@ -210,7 +211,7 @@ private void aor_outputToFile(UnaryExpression original, Expression mutant) {
 	       try 
 	       {
 	 		 PrintWriter out = getPrintWriter(f_name);
-	 		 ODL_Writer writer = new ODL_Writer(mutant_dir, out);
+	 		 VDL_Writer writer = new VDL_Writer(mutant_dir, out);
 	 		 writer.setMutant(original, mutant);
 	          writer.setMethodSignature(currentMethodSignature);
 	 		 comp_unit.accept( writer );

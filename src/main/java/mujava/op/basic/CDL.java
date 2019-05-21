@@ -168,7 +168,7 @@ private void aorMutantGen(BinaryExpression exp)
       try 
       {
 		 PrintWriter out = getPrintWriter(f_name);
-		 ODL_Writer writer = new ODL_Writer(mutant_dir, out);
+		 CDL_Writer writer = new CDL_Writer(mutant_dir, out);
 		 writer.setMutant(original, mutant);
          writer.setMethodSignature(currentMethodSignature);
 		 comp_unit.accept( writer );
@@ -196,7 +196,7 @@ private void aorMutantGen(BinaryExpression exp)
 	       try 
 	       {
 	 		 PrintWriter out = getPrintWriter(f_name);
-	 		 ODL_Writer writer = new ODL_Writer(mutant_dir, out);
+	 		 CDL_Writer writer = new CDL_Writer(mutant_dir, out);
 	 		 writer.setMutant(original, mutant);
 	          writer.setMethodSignature(currentMethodSignature);
 	 		 comp_unit.accept( writer );
@@ -223,7 +223,7 @@ private void aor_outputToFile(UnaryExpression original, Expression mutant) {
 	       try 
 	       {
 	 		 PrintWriter out = getPrintWriter(f_name);
-	 		 ODL_Writer writer = new ODL_Writer(mutant_dir, out);
+	 		 CDL_Writer writer = new CDL_Writer(mutant_dir, out);
 	 		 writer.setMutant(original, mutant);
 	          writer.setMethodSignature(currentMethodSignature);
 	 		 comp_unit.accept( writer );
@@ -251,7 +251,7 @@ private void aor_outputToFile(AssignmentExpression original, AssignmentExpressio
      try 
      {
 		 PrintWriter out = getPrintWriter(f_name);
-		 ODL_Writer writer = new ODL_Writer(mutant_dir, out);
+		 CDL_Writer writer = new CDL_Writer(mutant_dir, out);
 		 writer.setMutant(original, mutant);
         writer.setMethodSignature(currentMethodSignature);
 		 comp_unit.accept( writer );

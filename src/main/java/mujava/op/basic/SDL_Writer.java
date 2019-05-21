@@ -144,11 +144,30 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 	   if(mutant != null){
 	      if (isSameObject(p, original))
 	      {
+	      	Statement deleted = null;
+
+	      	 for (int i = 0; i < mutant.size() && deleted == null; i++) {
+				 if (!isSameObject(mutant.get(i), original.get(i))) {
+					 deleted = original.get(i);
+				 }
+			 }
+
 	         super.visit(mutant);
 	         // -----------------------------------------------------------
 	         mutated_line = line_num;
-	         String log_str = p.toFlattenString()+ "  =>  " + mutant.toFlattenString();
-	         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+//	         String log_str = p.toFlattenString()+ "  =>  " + mutant.toFlattenString()
+
+	         if (deleted != null) {
+	         	if (deleted instanceof ExpressionStatement) {
+	         		Expression e = ((ExpressionStatement) deleted).getExpression();
+
+					String log_str = e.toString() + "  =>  " + " ";
+					writeLog(removeNewline(appendTargetInfo(e, log_str, getLabel(), getOriginalId(p))));
+				} else {
+					String log_str = deleted.toString() + "  =>  " + " ";
+					writeLog(removeNewline(appendTargetInfo(deleted, log_str, getLabel(), getOriginalId(p))));
+				}
+			 }
 	         // -------------------------------------------------------------
 	      }
 	      else
@@ -163,7 +182,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 		         // -----------------------------------------------------------
 		         mutated_line = line_num;
 		         String log_str = p.toFlattenString()+ "  =>  " + mutantBoolean.toFlattenString();
-		         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+		         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId(p))));
 		         // -------------------------------------------------------------
 		      }
 		      else
@@ -183,7 +202,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 	         // -----------------------------------------------------------
 	         mutated_line = line_num;
 	         String log_str = p.toFlattenString()+ "  =>  " + mutantTry.toFlattenString();
-	         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+	         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId(p))));
 	         // -------------------------------------------------------------
 	      }
 	      else
@@ -198,7 +217,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 		         // -----------------------------------------------------------
 		         mutated_line = line_num;
 		         String log_str = p.toFlattenString()+ "  =>  " + mutantBoolean.toFlattenString();
-		         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+		         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId(p))));
 		         // -------------------------------------------------------------
 		      }
 		      else
@@ -218,7 +237,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 	         // -----------------------------------------------------------
 	         mutated_line = line_num;
 	         String log_str = p.toFlattenString()+ "  =>  " + mutantIf.toFlattenString();
-	         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+	         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId(p))));
 	         // -------------------------------------------------------------
 	      }
 	      else
@@ -233,7 +252,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 		         // -----------------------------------------------------------
 		         mutated_line = line_num;
 		         String log_str = p.toFlattenString()+ "  =>  " + mutantBoolean.toFlattenString();
-		         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+		         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId(p))));
 		         // -------------------------------------------------------------
 		      }
 		      else
@@ -252,7 +271,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 	         // -----------------------------------------------------------
 	         mutated_line = line_num;
 	         String log_str = p.toFlattenString()+ "  =>  " + mutantWhile.toFlattenString();
-	         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+	         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId(p))));
 	         // -------------------------------------------------------------
 	      }
 	      else
@@ -267,7 +286,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 		         // -----------------------------------------------------------
 		         mutated_line = line_num;
 		         String log_str = p.toFlattenString()+ "  =>  " + mutantBoolean.toFlattenString();
-		         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+		         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId(p))));
 		         // -------------------------------------------------------------
 		      }
 		      else
@@ -287,7 +306,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 	         // -----------------------------------------------------------
 	         mutated_line = line_num;
 	         String log_str = p.toFlattenString()+ "  =>  " + mutantFor.toFlattenString();
-	         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+	         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId(p))));
 	         // -------------------------------------------------------------
 	      }
 	      else
@@ -302,7 +321,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 		         // -----------------------------------------------------------
 		         mutated_line = line_num;
 		         String log_str = p.toFlattenString()+ "  =>  " + mutantBoolean.toFlattenString();
-		         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+		         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId(p))));
 		         // -------------------------------------------------------------
 		      }
 		      else
@@ -321,7 +340,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 	         // -----------------------------------------------------------
 	         mutated_line = line_num;
 	         String log_str = p.toFlattenString()+ "  =>  " + mutantReturn.toFlattenString();
-	         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+	         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId(p))));
 	         // -------------------------------------------------------------
 	      }
 	      else
@@ -336,7 +355,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 		         // -----------------------------------------------------------
 		         mutated_line = line_num;
 		         String log_str = p.toFlattenString()+ "  =>  " + mutantBoolean.toFlattenString();
-		         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+		         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId(p))));
 		         // -------------------------------------------------------------
 		      }
 		      else
@@ -355,7 +374,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 	         // -----------------------------------------------------------
 	         mutated_line = line_num;
 	         String log_str = p.toFlattenString()+ "  =>  " + mutantCase.toFlattenString();
-	         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+	         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId(p))));
 	         // -------------------------------------------------------------
 	      }
 	      else
@@ -370,7 +389,7 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 		         // -----------------------------------------------------------
 		         mutated_line = line_num;
 		         String log_str = p.toFlattenString()+ "  =>  " + mutantBoolean.toFlattenString();
-		         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+		         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId(p))));
 		         // -------------------------------------------------------------
 		      }
 		      else
@@ -379,5 +398,37 @@ public class SDL_Writer extends TraditionalMutantCodeWriter
 		      }
 	   }
    }
+
+	private String getLabel() {
+		return "SDL";
+	}
+
+	private String getOriginalId(CaseGroupList p) {
+		return "case_stm";
+	}
+
+	private String getOriginalId(ReturnStatement p) {
+		return "return_stm";
+	}
+
+	private String getOriginalId(ForStatement p) {
+		return "for_stm";
+	}
+
+	private String getOriginalId(WhileStatement p) {
+		return "white_stm";
+	}
+
+	private String getOriginalId(IfStatement p) {
+		return "if_stm";
+	}
+
+	private String getOriginalId(TryStatement p) {
+		return "try_stm";
+	}
+
+	private String getOriginalId(StatementList p) {
+		return "stm_list";
+	}
 
 }

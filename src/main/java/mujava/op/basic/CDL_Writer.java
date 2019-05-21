@@ -58,7 +58,7 @@ public class CDL_Writer extends TraditionalMutantCodeWriter
          // -----------------------------------------------------------
          mutated_line = line_num;
          String log_str = p.toString() + " => " + mutant.toString();
-         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(p), getOriginalId(p))));
          // -------------------------------------------------------------
       } 
       else
@@ -75,7 +75,7 @@ public class CDL_Writer extends TraditionalMutantCodeWriter
          // -----------------------------------------------------------
          mutated_line = line_num;
          String log_str = p.toString() + " => " + mutant.toString();
-         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(p), getOriginalId(p))));
          // -------------------------------------------------------------
       } 
       else
@@ -101,15 +101,41 @@ public class CDL_Writer extends TraditionalMutantCodeWriter
       }
    }
 
-public void setMutant(UnaryExpression exp1, Expression exp2) {
-    original = exp1;
-    mutant = exp2;
-	
-}
+   public void setMutant(UnaryExpression exp1, Expression exp2) {
+       original = exp1;
+       mutant = exp2;
 
-public void setMutant(AssignmentExpression exp1, Expression exp2) {
-    original = exp1;
-    mutant = exp2;
-	
-}
+   }
+
+   public void setMutant(AssignmentExpression exp1, Expression exp2) {
+       original = exp1;
+       mutant = exp2;
+
+   }
+
+   private String getLabel(BinaryExpression p) {
+      Expression left = p.getLeft();
+      Expression right = p.getRight();
+
+      if (mutant.toString().equals(left.toString())) {
+         return "CDL lexp";
+      } else if (mutant.toString().equals(right.toString())) {
+         return  "CDL rexp";
+      }
+
+      return "CDL ?";
+   }
+
+   private String getOriginalId(BinaryExpression p) {
+      return "lexp " + p.operatorString() + " rexp";
+   }
+
+   private String getLabel(UnaryExpression p) {
+
+      return "CDL";
+   }
+
+   private String getOriginalId(UnaryExpression p) {
+      return "exp";
+   }
 }

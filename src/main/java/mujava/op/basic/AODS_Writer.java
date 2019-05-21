@@ -54,12 +54,26 @@ public class AODS_Writer extends TraditionalMutantCodeWriter
          // -----------------------------------------------------------
          mutated_line = line_num;
          String log_str = p.toString() + " => " + p.getExpression().toString();
-         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+         writeLog(removeNewline(appendTargetInfo(p, log_str, "AODS exp", getOriginalId(p))));
          // -------------------------------------------------------------
       } 
       else
       {
          super.visit(p);
       }
+   }
+
+   private String getOriginalId(UnaryExpression p) {
+      if (p.toString().startsWith("--")) {
+         return "--exp";
+      } else if (p.toString().endsWith("--")) {
+         return "exp--";
+      } else if (p.toString().startsWith("++")) {
+         return "++exp";
+      } else if (p.toString().endsWith("++")) {
+         return "exp++";
+      }
+
+      return "?exp?";
    }
 }

@@ -57,12 +57,28 @@ public class AORS_Writer extends TraditionalMutantCodeWriter
          // -----------------------------------------------------------
          mutated_line = line_num;
          String log_str = p.toString() + " => " + unary_mutant.toString();
-         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId(p))));
          // -------------------------------------------------------------
       }
       else
       {
          super.visit(p);
       }
+   }
+
+   private String getLabel() {
+      if (unary_mutant.isPostfix()) {
+         return "AORS exp" + unary_mutant.operatorString();
+      }
+
+      return "AORS " +  unary_mutant.operatorString() + "exp";
+   }
+
+   private String getOriginalId(UnaryExpression p) {
+      if (p.isPostfix()) {
+         return "exp" + p.operatorString();
+      }
+
+      return p.operatorString() + "exp";
    }
 }

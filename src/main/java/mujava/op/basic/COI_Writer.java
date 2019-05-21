@@ -74,7 +74,7 @@ public class COI_Writer extends TraditionalMutantCodeWriter
          // -----------------------------------------------------------
          mutated_line = line_num;
          String log_str = p.toFlattenString()+ "  =>  " +"!("+p.toString()+")";
-         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(p), getOriginalId(p))));
          // -------------------------------------------------------------
       } 
       else
@@ -94,7 +94,7 @@ public class COI_Writer extends TraditionalMutantCodeWriter
          // -----------------------------------------------------------
          mutated_line = line_num;
          String log_str = p.toFlattenString()+ "  =>  " +"!"+p.toString();
-         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(p), getOriginalId(p))));
          // -------------------------------------------------------------
       }
       else
@@ -114,12 +114,36 @@ public class COI_Writer extends TraditionalMutantCodeWriter
          // -----------------------------------------------------------
          mutated_line = line_num;
          String log_str = p.toFlattenString()+ "  =>  " +"!"+p.toString();
-         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(p), getOriginalId(p))));
          // -------------------------------------------------------------
       }
       else
       {
          super.visit(p);
       }
+   }
+
+   private String getLabel(FieldAccess p) {
+      return "COI !exp";
+   }
+
+   private String getOriginalId(FieldAccess p) {
+      return "exp";
+   }
+
+   private String getLabel(Variable p) {
+      return "COI !exp";
+   }
+
+   private String getOriginalId(Variable p) {
+      return "exp";
+   }
+
+   private String getLabel(BinaryExpression p) {
+      return "COI !()";
+   }
+
+   private String getOriginalId(BinaryExpression p) {
+      return "lexp " + p.operatorString() + " rexp";
    }
 }

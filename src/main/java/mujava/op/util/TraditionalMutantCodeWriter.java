@@ -58,4 +58,11 @@ public class TraditionalMutantCodeWriter extends MutantCodeWriter{
                 + content;
     }
 
+    protected static String appendTargetInfo(ParseTree p, String content, String label, String originalId) {
+        return p.getObjectID() + MutationSystem.LOG_IDENTIFIER +
+                p.getClass().getSimpleName() + MutationSystem.LOG_IDENTIFIER
+                + label + MutationSystem.LOG_IDENTIFIER + originalId
+                + MutationSystem.LOG_IDENTIFIER + content;
+    }
+
 }

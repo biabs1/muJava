@@ -71,7 +71,7 @@ public class ROR_Writer extends TraditionalMutantCodeWriter
 	         // -----------------------------------------------------------
 	         mutated_line = line_num;
 	         String log_str = p.toFlattenString()+ "  =>  " + mutant.toFlattenString();
-	         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+	         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId())));
 	         // -------------------------------------------------------------
 	      }
 	      else
@@ -86,7 +86,7 @@ public class ROR_Writer extends TraditionalMutantCodeWriter
 		         // -----------------------------------------------------------
 		         mutated_line = line_num;
 		         String log_str = p.toFlattenString()+ "  =>  " + mutantBoolean.toFlattenString();
-		         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+		         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId())));
 		         // -------------------------------------------------------------
 		      }
 		      else
@@ -95,5 +95,16 @@ public class ROR_Writer extends TraditionalMutantCodeWriter
 		      }
 	   }
    }
+
+	private String getLabel() {
+		if (mutant != null) {
+			return "ROR " + mutant.operatorString();
+		}
+		return "ROR " + mutantBoolean.toString();
+	}
+
+	private String getOriginalId() {
+		return "lexp " + original.operatorString() + " rexp";
+	}
    
 }

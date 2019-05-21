@@ -54,7 +54,7 @@ public class AODU_Writer extends TraditionalMutantCodeWriter
          // -----------------------------------------------------------
          mutated_line = line_num;
          String log_str = p.toString() + " => " + p.getExpression().toString();
-         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+         writeLog(removeNewline(appendTargetInfo(p, log_str, "AODU exp", p.operatorString() + "exp")));
          // -------------------------------------------------------------
       } 
       else

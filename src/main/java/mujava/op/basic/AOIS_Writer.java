@@ -69,7 +69,8 @@ public class AOIS_Writer extends TraditionalMutantCodeWriter
          // -----------------------------------------------------------
          mutated_line = line_num;
          String log_str = p.toString() + " => " + mutant;
-         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+
+         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), "exp")));
          // -------------------------------------------------------------
       }
       else
@@ -89,12 +90,26 @@ public class AOIS_Writer extends TraditionalMutantCodeWriter
          // -----------------------------------------------------------
          mutated_line = line_num;
          String log_str = p.toString() + " => " + mutant;
-         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), "exp")));
          // -------------------------------------------------------------
       }
       else
       {
          super.visit(p);
       }
+   }
+
+   private String getLabel() {
+      if (mutant.startsWith("--")) {
+         return "AOIS --exp";
+      } else if (mutant.endsWith("--")) {
+         return "AOIS exp--";
+      } else if (mutant.startsWith("++")) {
+         return "AOIS ++exp";
+      } else if (mutant.endsWith("++")) {
+         return "AOIS exp++";
+      }
+
+      return "AOIS ?";
    }
 }
