@@ -34,7 +34,6 @@ public class Calc {
             else
                 a += arr[1];
 
-        var1 = var1 >> 1;
         var1 = var1 << 3;
 
         var1 = var1 & 1;
