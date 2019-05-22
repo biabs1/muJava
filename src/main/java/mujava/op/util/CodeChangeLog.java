@@ -30,6 +30,7 @@ public class CodeChangeLog {
   static PrintWriter log_writer;
 
   public static void openLogFile(){
+    FullCodeChangeLog.openLogFile();
     try{
       File f = new File(MutationSystem.MUTANT_PATH,logFile_name);
       FileWriter fout = new FileWriter(f);
@@ -44,6 +45,7 @@ public class CodeChangeLog {
   }
 
   public static void closeLogFile(){
+    FullCodeChangeLog.closeLogFile();
     log_writer.flush();
     log_writer.close();
   }
