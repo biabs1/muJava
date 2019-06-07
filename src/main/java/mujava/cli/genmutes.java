@@ -49,7 +49,7 @@ import org.apache.commons.io.IOUtils;
 import mujava.MutationSystem;
 import mujava.OpenJavaException;
 import mujava.TraditionalMutantsGenerator;
-import mujava.TraditionalMutantsGeneratorCLI;
+
 
 import com.beust.jcommander.JCommander;
 
@@ -352,8 +352,8 @@ public class genmutes {
 
 				String[] opArray = traditional_ops.keySet().toArray(new String[0]);
 
-				TraditionalMutantsGeneratorCLI tmGenEngine;
-				tmGenEngine = new TraditionalMutantsGeneratorCLI(original_file, opArray);
+				TraditionalMutantsGenerator tmGenEngine;
+				tmGenEngine = new TraditionalMutantsGenerator(original_file, opArray);
 				tmGenEngine.makeMutants();
 				tmGenEngine.compileMutants();
 								
