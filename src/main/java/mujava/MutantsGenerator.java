@@ -438,7 +438,7 @@ public abstract class MutantsGenerator
          String[] pars = new String[v.size()+2];
 
          pars[0] = "-classpath";
-         pars[1] = MutationSystem.CLASS_PATH;
+         pars[1] = MutationSystem.getClasspath();
          for (int j=0; j<v.size(); j++)
          {
             pars[2+j] = v.get(j).toString();
@@ -519,7 +519,7 @@ public abstract class MutantsGenerator
    private void compileOriginal()
    {
       String[] pars= { "-classpath",
-                      MutationSystem.CLASS_PATH,
+                      MutationSystem.getClasspath(),
                       MutationSystem.ORIGINAL_PATH + "/" + MutationSystem.CLASS_NAME + ".java"};
       try
       {
