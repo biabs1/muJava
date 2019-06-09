@@ -54,10 +54,11 @@ public class TraditionalMutantCodeWriter extends MutantCodeWriter{
                 + method_signature + MutationSystem.LOG_IDENTIFIER
                 + changed_content.substring(changed_content.lastIndexOf(MutationSystem.LOG_IDENTIFIER) + 1));
 
-        FullCodeChangeLog.writeLog(class_name+ MutationSystem.LOG_IDENTIFIER
-                + mutated_line+MutationSystem.LOG_IDENTIFIER
-                + method_signature + MutationSystem.LOG_IDENTIFIER
-                + changed_content);
+        FullCodeChangeLog.writeLog(class_name
+                + MutationSystem.LOG_IDENTIFIER + classPackage
+                + MutationSystem.LOG_IDENTIFIER + mutated_line
+                + MutationSystem.LOG_IDENTIFIER + method_signature
+                + MutationSystem.LOG_IDENTIFIER + changed_content);
     }
 
     protected static String appendTargetInfo(ParseTree p, String content) {
@@ -67,7 +68,6 @@ public class TraditionalMutantCodeWriter extends MutantCodeWriter{
     }
 
     protected static String appendTargetInfo(ParseTree p, String content, String label, String originalId) {
-
 
         return p.getObjectID()
                 + MutationSystem.LOG_IDENTIFIER + p.getClass().getSimpleName()

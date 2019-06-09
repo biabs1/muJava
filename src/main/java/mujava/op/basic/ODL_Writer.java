@@ -92,7 +92,7 @@ public class ODL_Writer extends TraditionalMutantCodeWriter
          // -----------------------------------------------------------
          mutated_line = line_num;
          String log_str = p.toString() + " => " + mutant.toString();
-         writeLog(removeNewline(appendTargetInfo(p, log_str)));
+         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(p), getOriginalId(p))));
          // -------------------------------------------------------------
       } 
       else
@@ -132,10 +132,19 @@ public class ODL_Writer extends TraditionalMutantCodeWriter
 
    private String getLabel(UnaryExpression p) {
 
-      return "ODL";
+      return "ODL exp";
    }
 
    private String getOriginalId(UnaryExpression p) {
-      return "exp";
+      return p.operatorString() + "exp";
+   }
+
+   private String getLabel(AssignmentExpression p) {
+
+      return "ODL lexp = rexp";
+   }
+
+   private String getOriginalId(AssignmentExpression p) {
+      return "lexp " + p.operatorString() + " rexp";
    }
 }

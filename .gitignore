@@ -18,3 +18,5 @@ testset
 
 mujava.config
 examples
+
+*.iml
