@@ -15,6 +15,7 @@
  */ 
 package mujava.op.basic;
 
+import br.ufal.ic.easy.hunor.Rules;
 import openjava.mop.*;
 import openjava.ptree.*;
 
@@ -118,6 +119,7 @@ private void aorMutantGen(BinaryExpression exp)
    {
       Expression mutantLeft = exp.getLeft();
       Expression mutantRight = exp.getRight();
+
       if(!(mutantLeft instanceof Variable) 
     		  && !(mutantLeft instanceof UnaryExpression) 
     		  && !(mutantLeft instanceof BinaryExpression)
@@ -128,7 +130,8 @@ private void aorMutantGen(BinaryExpression exp)
     		  && !(mutantLeft instanceof CastExpression)
     		  && !(mutantLeft instanceof AllocationExpression)
     		  && !(mutantLeft instanceof ArrayAllocationExpression)
-    		  && !(mutantLeft instanceof FieldAccess)) // if left is not variable, it's constant???
+    		  && !(mutantLeft instanceof FieldAccess)
+	          && Rules.cdlRules(exp)) // if left is not variable, it's constant???
       {
     	  aor_outputToFile(exp, mutantRight); // delete it, only left right
       }
@@ -142,7 +145,8 @@ private void aorMutantGen(BinaryExpression exp)
     		  && !(mutantRight instanceof CastExpression)
     		  && !(mutantRight instanceof AllocationExpression)
     		  && !(mutantRight instanceof ArrayAllocationExpression)
-    		  && !(mutantRight instanceof FieldAccess)) // if right is not variable, it's constant???
+    		  && !(mutantRight instanceof FieldAccess)
+	          && Rules.cdlRules(exp)) // if right is not variable, it's constant???
       {
     	  aor_outputToFile(exp, mutantLeft);  // delete it, only left left 
       }
