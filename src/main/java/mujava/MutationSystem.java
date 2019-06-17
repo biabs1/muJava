@@ -78,6 +78,8 @@ public class MutationSystem extends OJSystem
    /** path of classes of Java source files at SRC_PATH directory */
    public static String CLASS_PATH = SYSTEM_HOME + "/classes";
 
+   public static String CLASSPATH;
+
    /** home path which mutants are put into */
    public static String MUTANT_HOME = SYSTEM_HOME + "/result";
 
@@ -468,7 +470,7 @@ public class MutationSystem extends OJSystem
    {
       String[] classes = null;
       classes = MutationSystem.getAllClassNames(classes, MutationSystem.CLASS_PATH);
-      
+
       if (classes == null)
       {
          System.err.println("[ERROR] There are no classes to mutate.");
@@ -645,6 +647,14 @@ public class MutationSystem extends OJSystem
       {
          e.printStackTrace();
       }
+   }
+
+   public static String getClasspath() {
+       if (CLASSPATH == null) {
+           return CLASS_PATH;
+       }
+
+       return CLASSPATH;
    }
    
    

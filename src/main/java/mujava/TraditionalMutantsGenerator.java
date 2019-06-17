@@ -48,6 +48,7 @@
 */
 package mujava;
 
+import br.ufal.ic.easy.hunor.Rules;
 import openjava.ptree.*;
 import java.io.*;
 import mujava.op.basic.*;
@@ -63,18 +64,21 @@ public class TraditionalMutantsGenerator extends MutantsGenerator
    {
       super(f);
       traditionalOp = MutationSystem.tm_operators;
+      Rules.setTraditionalOperatorsEnabled(traditionalOp);
    }
    
    public TraditionalMutantsGenerator(File f, boolean debug) 
    {
       super (f, debug);
       traditionalOp = MutationSystem.tm_operators;
+      Rules.setTraditionalOperatorsEnabled(traditionalOp);
    }
 
    public TraditionalMutantsGenerator(File f, String[] tOP) 
    {
       super(f);
       traditionalOp = tOP;
+      Rules.setTraditionalOperatorsEnabled(traditionalOp);
    }
 
    /** 

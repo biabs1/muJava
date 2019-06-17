@@ -65,7 +65,7 @@ public class LOI_Writer extends TraditionalMutantCodeWriter
          // -----------------------------------------------------------
          mutated_line = line_num;
          String log_str = p.toString() + " => " + "~"+p.toString();
-         writeLog(removeNewline(log_str));
+         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId())));
          // -------------------------------------------------------------
       }
       else
@@ -86,12 +86,20 @@ public class LOI_Writer extends TraditionalMutantCodeWriter
          // -----------------------------------------------------------
          mutated_line = line_num;
          String log_str = p.toString() + " => " + "~"+p.toString();
-         writeLog(removeNewline(log_str));
+         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId())));
          // -------------------------------------------------------------
       }
       else
       {
          super.visit(p);
       }
+   }
+
+   private String getLabel() {
+      return "LOI ~exp";
+   }
+
+   private String getOriginalId() {
+      return "exp";
    }
 }

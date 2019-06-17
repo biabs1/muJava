@@ -38,6 +38,8 @@ public class MutantCodeWriter extends ParseTreeVisitor
    public String class_name = null;
    //public String target_name = null;
 
+   public String classPackage = "";
+
    public int line_num=1;
    public int mutated_line=-1;
 
@@ -544,6 +546,7 @@ public class MutantCodeWriter extends ParseTreeVisitor
 
         /* package statement */
         String qn = p.getPackage();
+        classPackage = qn;
         if (qn != null) {
             out.print( "package " + qn + ";" );
             out.println(); line_num++;

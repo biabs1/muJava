@@ -57,12 +57,20 @@ public class AORB_Writer extends TraditionalMutantCodeWriter
          // -----------------------------------------------------------
          mutated_line = line_num;
          String log_str = p.toString() + " => " + mutant.toString();
-         writeLog(removeNewline(log_str));
+         writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId())));
          // -------------------------------------------------------------
       } 
       else
       {
          super.visit(p);
       }
+   }
+
+   private String getLabel() {
+      return "AORB " + mutant.operatorString();
+   }
+
+   private String getOriginalId() {
+      return "lexp " + original.operatorString() + " rexp";
    }
 }

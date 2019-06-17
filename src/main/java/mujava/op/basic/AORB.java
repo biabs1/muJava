@@ -15,6 +15,7 @@
  */ 
 package mujava.op.basic;
 
+import br.ufal.ic.easy.hunor.Rules;
 import openjava.mop.*;
 import openjava.ptree.*;
 import java.io.*;
@@ -80,31 +81,31 @@ public class AORB extends Arithmetic_OP
    private void aorMutantGen(BinaryExpression exp, int op)
    {
       BinaryExpression mutant;
-      if (op != BinaryExpression.TIMES)
+      if (op != BinaryExpression.TIMES && Rules.aorRules(op, BinaryExpression.TIMES))
       {
          mutant = (BinaryExpression)exp.makeRecursiveCopy();
          mutant.setOperator(BinaryExpression.TIMES);
          aor_outputToFile(exp, mutant);
       }
-      if (op != BinaryExpression.DIVIDE)
+      if (op != BinaryExpression.DIVIDE && Rules.aorRules(op, BinaryExpression.DIVIDE))
       {
          mutant = (BinaryExpression)exp.makeRecursiveCopy();
          mutant.setOperator(BinaryExpression.DIVIDE);
          aor_outputToFile(exp, mutant);
       }
-      if(op != BinaryExpression.MOD)
+      if(op != BinaryExpression.MOD && Rules.aorRules(op, BinaryExpression.MOD))
       {
          mutant = (BinaryExpression)exp.makeRecursiveCopy();
          mutant.setOperator(BinaryExpression.MOD);
          aor_outputToFile(exp, mutant);
       }
-      if (op != BinaryExpression.PLUS)
+      if (op != BinaryExpression.PLUS && Rules.aorRules(op, BinaryExpression.PLUS))
       {
          mutant = (BinaryExpression)exp.makeRecursiveCopy();
          mutant.setOperator(BinaryExpression.PLUS);
          aor_outputToFile(exp, mutant);
       }
-      if (op != BinaryExpression.MINUS)
+      if (op != BinaryExpression.MINUS && Rules.aorRules(op, BinaryExpression.MINUS))
       {
          mutant = (BinaryExpression)exp.makeRecursiveCopy();
          mutant.setOperator(BinaryExpression.MINUS);

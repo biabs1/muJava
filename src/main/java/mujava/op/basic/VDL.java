@@ -15,6 +15,7 @@
  */ 
 package mujava.op.basic;
 
+import br.ufal.ic.easy.hunor.Rules;
 import openjava.mop.*;
 import openjava.ptree.*;
 
@@ -120,11 +121,11 @@ private void aorMutantGen(BinaryExpression exp)
 {
    Expression mutantLeft = exp.getLeft();
    Expression mutantRight = exp.getRight();
-   if(mutantLeft instanceof Variable || mutantLeft instanceof ArrayAccess) // if left is  variable or an array access
+   if((mutantLeft instanceof Variable || mutantLeft instanceof ArrayAccess) && Rules.vdlRules(exp)) // if left is  variable or an array access
    {//System.out.println("b "+exp);
  	  aor_outputToFile(exp, mutantRight); // delete it, only keep right
    }
-   if(mutantRight instanceof Variable || mutantRight instanceof ArrayAccess) // if right is variable or an array access
+   if((mutantRight instanceof Variable || mutantRight instanceof ArrayAccess) && Rules.vdlRules(exp)) // if right is variable or an array access
    {//System.out.println("b "+exp);
  	  aor_outputToFile(exp, mutantLeft);  // delete it, only keep left 
    }
@@ -152,10 +153,11 @@ private void aorMutantGen(BinaryExpression exp)
       f_name = getSourceName("VDL");
       String mutant_dir = getMuantID("VDL");
 
-      try 
+
+      try
       {
 		 PrintWriter out = getPrintWriter(f_name);
-		 ODL_Writer writer = new ODL_Writer(mutant_dir, out);
+		 VDL_Writer writer = new VDL_Writer(mutant_dir, out);
 		 writer.setMutant(original, mutant);
          writer.setMethodSignature(currentMethodSignature);
 		 comp_unit.accept( writer );
@@ -183,7 +185,7 @@ private void aorMutantGen(BinaryExpression exp)
 	       try 
 	       {
 	 		 PrintWriter out = getPrintWriter(f_name);
-	 		 ODL_Writer writer = new ODL_Writer(mutant_dir, out);
+	 		 VDL_Writer writer = new VDL_Writer(mutant_dir, out);
 	 		 writer.setMutant(original, mutant);
 	          writer.setMethodSignature(currentMethodSignature);
 	 		 comp_unit.accept( writer );
@@ -210,7 +212,7 @@ private void aor_outputToFile(UnaryExpression original, Expression mutant) {
 	       try 
 	       {
 	 		 PrintWriter out = getPrintWriter(f_name);
-	 		 ODL_Writer writer = new ODL_Writer(mutant_dir, out);
+	 		 VDL_Writer writer = new VDL_Writer(mutant_dir, out);
 	 		 writer.setMutant(original, mutant);
 	          writer.setMethodSignature(currentMethodSignature);
 	 		 comp_unit.accept( writer );
