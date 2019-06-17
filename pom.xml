@@ -12,8 +12,8 @@
 
     <repositories>
         <repository>
-            <id>lib</id>
-            <url>file://${project.basedir}/lib/</url>
+            <id>marcioaug</id>
+            <url>https://raw.githubusercontent.com/marcioaug/mvn/repo</url>
         </repository>
     </repositories>
 
