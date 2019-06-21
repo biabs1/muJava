@@ -7,8 +7,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>mujava</groupId>
-    <artifactId>mujava</artifactId>
-    <version>4.0.1-build.11</version>
+    <artifactId>mujava-easy</artifactId>
+    <version>4.1.0</version>
 
     <repositories>
         <repository>
