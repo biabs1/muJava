@@ -224,7 +224,11 @@ public class ComposedStatementVisitor extends ParseTreeVisitor {
     }
 
     public void visit(UnaryExpression var1) throws ParseTreeException {
+        ChildrenVisitor visitor = new ChildrenVisitor();
 
+        var1.getExpression().accept(visitor);
+
+        children.addAll(visitor.getChildren());
     }
 
     public void visit(Variable var1) throws ParseTreeException {
