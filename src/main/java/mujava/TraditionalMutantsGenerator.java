@@ -64,21 +64,25 @@ public class TraditionalMutantsGenerator extends MutantsGenerator
    {
       super(f);
       traditionalOp = MutationSystem.tm_operators;
-      Rules.setTraditionalOperatorsEnabled(traditionalOp);
    }
    
    public TraditionalMutantsGenerator(File f, boolean debug) 
    {
       super (f, debug);
       traditionalOp = MutationSystem.tm_operators;
-      Rules.setTraditionalOperatorsEnabled(traditionalOp);
    }
 
    public TraditionalMutantsGenerator(File f, String[] tOP) 
    {
       super(f);
       traditionalOp = tOP;
+   }
+
+   private void initHunorRules() {
+      Rules.setCurrentFile(original_file);
       Rules.setTraditionalOperatorsEnabled(traditionalOp);
+      Rules.setCompilationUnit(comp_unit);
+      Rules.setFileEnvironment(file_env);
    }
 
    /** 
@@ -186,6 +190,8 @@ public class TraditionalMutantsGenerator extends MutantsGenerator
                   System.err.println("Error in writing method list");
                   return;
                }
+
+               this.initHunorRules();
 
                if (hasOperator (traditionalOp, "AORB") )
                {

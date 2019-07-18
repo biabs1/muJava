@@ -15,6 +15,7 @@
  */ 
 package mujava.op.basic;
 
+import br.ufal.ic.easy.hunor.Rules;
 import openjava.mop.*;
 import openjava.ptree.*;
 import java.io.*;
@@ -37,7 +38,7 @@ public class LOI extends Arithmetic_OP
 
    public void visit( Variable p) throws ParseTreeException
    {
-      if (isArithmeticType(p))
+      if (isArithmeticType(p) && Rules.canApply(p, Rules.Mutation.LOI_BITNOT, this))
       {
          outputToFile(p);
       }
@@ -45,7 +46,7 @@ public class LOI extends Arithmetic_OP
 
    public void visit( FieldAccess p ) throws ParseTreeException
    {
-      if (isArithmeticType(p))
+      if (isArithmeticType(p) && Rules.canApply(p, Rules.Mutation.LOI_BITNOT, this))
       {
          outputToFile(p);
       }

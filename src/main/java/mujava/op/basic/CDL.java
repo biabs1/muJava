@@ -131,7 +131,7 @@ private void aorMutantGen(BinaryExpression exp)
     		  && !(mutantLeft instanceof AllocationExpression)
     		  && !(mutantLeft instanceof ArrayAllocationExpression)
     		  && !(mutantLeft instanceof FieldAccess)
-	          && Rules.cdlRules(exp)) // if left is not variable, it's constant???
+	          && Rules.canApply(exp, Rules.Mutation.CDL_REXP, this)) // if left is not variable, it's constant???
       {
     	  aor_outputToFile(exp, mutantRight); // delete it, only left right
       }
@@ -146,7 +146,7 @@ private void aorMutantGen(BinaryExpression exp)
     		  && !(mutantRight instanceof AllocationExpression)
     		  && !(mutantRight instanceof ArrayAllocationExpression)
     		  && !(mutantRight instanceof FieldAccess)
-	          && Rules.cdlRules(exp)) // if right is not variable, it's constant???
+	          && Rules.canApply(exp, Rules.Mutation.CDL_LEXP, this)) // if right is not variable, it's constant???
       {
     	  aor_outputToFile(exp, mutantLeft);  // delete it, only left left 
       }

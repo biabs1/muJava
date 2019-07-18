@@ -15,6 +15,7 @@
  */ 
 package mujava.op.basic;
 
+import br.ufal.ic.easy.hunor.Rules;
 import openjava.mop.*;
 import openjava.ptree.*;
 
@@ -130,14 +131,14 @@ private void aorMutantGen(BinaryExpression exp)
       Expression mutantRight = exp.getRight();
       
 //      if(! (exp.getLeft() instanceof Variable))
-      {
+      if (Rules.canApply(exp, Rules.Mutation.ODL_LEXP, this)) {
 //    	  System.out.println(exp.getLeft() + " is variable");
 //    	  System.out.println(exp +" "+mutantLeft);
     	  aor_outputToFile(exp, mutantLeft);
       }
       
 //      if(! (exp.getRight() instanceof Variable))
-      {
+	   if (Rules.canApply(exp, Rules.Mutation.ODL_REXP, this)) {
 //    	  System.out.println(exp.getRight() + " is variable");
 //    	  System.out.println(exp +" "+mutantRight);
     	  aor_outputToFile(exp, mutantRight);

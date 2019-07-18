@@ -81,31 +81,31 @@ public class AORB extends Arithmetic_OP
    private void aorMutantGen(BinaryExpression exp, int op)
    {
       BinaryExpression mutant;
-      if (op != BinaryExpression.TIMES && Rules.aorRules(op, BinaryExpression.TIMES))
+      if (op != BinaryExpression.TIMES && Rules.canApply(exp, Rules.Mutation.AORB_TIMES, this))
       {
          mutant = (BinaryExpression)exp.makeRecursiveCopy();
          mutant.setOperator(BinaryExpression.TIMES);
          aor_outputToFile(exp, mutant);
       }
-      if (op != BinaryExpression.DIVIDE && Rules.aorRules(op, BinaryExpression.DIVIDE))
+      if (op != BinaryExpression.DIVIDE && Rules.canApply(exp, Rules.Mutation.AORB_DIVIDE, this))
       {
          mutant = (BinaryExpression)exp.makeRecursiveCopy();
          mutant.setOperator(BinaryExpression.DIVIDE);
          aor_outputToFile(exp, mutant);
       }
-      if(op != BinaryExpression.MOD && Rules.aorRules(op, BinaryExpression.MOD))
+      if(op != BinaryExpression.MOD && Rules.canApply(exp, Rules.Mutation.AORB_MOD, this))
       {
          mutant = (BinaryExpression)exp.makeRecursiveCopy();
          mutant.setOperator(BinaryExpression.MOD);
          aor_outputToFile(exp, mutant);
       }
-      if (op != BinaryExpression.PLUS && Rules.aorRules(op, BinaryExpression.PLUS))
+      if (op != BinaryExpression.PLUS && Rules.canApply(exp, Rules.Mutation.AORB_PLUS, this))
       {
          mutant = (BinaryExpression)exp.makeRecursiveCopy();
          mutant.setOperator(BinaryExpression.PLUS);
          aor_outputToFile(exp, mutant);
       }
-      if (op != BinaryExpression.MINUS && Rules.aorRules(op, BinaryExpression.MINUS))
+      if (op != BinaryExpression.MINUS && Rules.canApply(exp, Rules.Mutation.AORB_MINUS, this))
       {
          mutant = (BinaryExpression)exp.makeRecursiveCopy();
          mutant.setOperator(BinaryExpression.MINUS);

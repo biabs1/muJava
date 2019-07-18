@@ -121,11 +121,13 @@ private void aorMutantGen(BinaryExpression exp)
 {
    Expression mutantLeft = exp.getLeft();
    Expression mutantRight = exp.getRight();
-   if((mutantLeft instanceof Variable || mutantLeft instanceof ArrayAccess) && Rules.vdlRules(exp)) // if left is  variable or an array access
+   if((mutantLeft instanceof Variable || mutantLeft instanceof ArrayAccess)
+		   && Rules.canApply(exp, Rules.Mutation.VDL_REXP, this)) // if left is  variable or an array access
    {//System.out.println("b "+exp);
  	  aor_outputToFile(exp, mutantRight); // delete it, only keep right
    }
-   if((mutantRight instanceof Variable || mutantRight instanceof ArrayAccess) && Rules.vdlRules(exp)) // if right is variable or an array access
+   if((mutantRight instanceof Variable || mutantRight instanceof ArrayAccess)
+		   && Rules.canApply(exp, Rules.Mutation.VDL_LEXP, this)) // if right is variable or an array access
    {//System.out.println("b "+exp);
  	  aor_outputToFile(exp, mutantLeft);  // delete it, only keep left 
    }

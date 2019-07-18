@@ -16,6 +16,7 @@
 package mujava.op.basic;
 
 
+import br.ufal.ic.easy.hunor.Rules;
 import openjava.mop.*;
 import openjava.ptree.*;
 import java.io.*;
@@ -54,10 +55,14 @@ public class AOIS extends Arithmetic_OP
          }
          else
          {
-            outputToFile(p, "++" + p.toString() );
-            outputToFile(p, "--" + p.toString() );
-            outputToFile(p, p.toString() + "++" );
-            outputToFile(p, p.toString()+"--" );
+            if (Rules.canApply(p, Rules.Mutation.AOIS_PREINC, this))
+               outputToFile(p, "++" + p.toString() );
+            if (Rules.canApply(p, Rules.Mutation.AOIS_PREDEC, this))
+               outputToFile(p, "--" + p.toString() );
+            if (Rules.canApply(p, Rules.Mutation.AOIS_POSINC, this))
+               outputToFile(p, p.toString() + "++" );
+            if (Rules.canApply(p, Rules.Mutation.AOIS_POSDEC, this))
+               outputToFile(p, p.toString() + "--" );
          }
       }
    }
@@ -73,10 +78,14 @@ public class AOIS extends Arithmetic_OP
          }
          else
          {
-            outputToFile(p, "++" + p.toString() );
-            outputToFile(p, "--" + p.toString() );
-            outputToFile(p, p.toString() + "++" );
-            outputToFile(p, p.toString() + "--" );
+            if (Rules.canApply(p, Rules.Mutation.AOIS_PREINC, this))
+               outputToFile(p, "++" + p.toString() );
+            if (Rules.canApply(p, Rules.Mutation.AOIS_PREDEC, this))
+               outputToFile(p, "--" + p.toString() );
+            if (Rules.canApply(p, Rules.Mutation.AOIS_POSINC, this))
+               outputToFile(p, p.toString() + "++" );
+            if (Rules.canApply(p, Rules.Mutation.AOIS_POSDEC, this))
+               outputToFile(p, p.toString() + "--" );
          }
       }
    }

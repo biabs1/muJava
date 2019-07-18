@@ -15,6 +15,7 @@
  */
 package mujava.op.basic;
 
+import br.ufal.ic.easy.hunor.Rules;
 import openjava.mop.*;
 import openjava.ptree.*;
 import java.io.*;
@@ -62,7 +63,7 @@ public class AOIU extends Arithmetic_OP {
 	 * Generate AOIU mutant
 	 */
 	public void visit(Variable p) throws ParseTreeException {
-		if (isArithmeticType(p)) {
+		if (isArithmeticType(p) && Rules.canApply(p, Rules.Mutation.AOIU_MINUS, this)) {
 			outputToFile(p);
 		}
 	}
@@ -71,7 +72,7 @@ public class AOIU extends Arithmetic_OP {
 	 * Generate AOIU mutant
 	 */
 	public void visit(FieldAccess p) throws ParseTreeException {
-		if (isArithmeticType(p)) {
+		if (isArithmeticType(p) && Rules.canApply(p, Rules.Mutation.AOIU_MINUS, this)) {
 			outputToFile(p);
 		}
 	}
