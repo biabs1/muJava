@@ -15,6 +15,7 @@
  */ 
 package mujava.op.basic;
 
+import br.ufal.ic.easy.hunor.Rules;
 import openjava.mop.*;
 import openjava.ptree.*;
 import java.io.*;
@@ -43,7 +44,8 @@ public class COI extends MethodLevelMutator
 
    public void visit( Variable p ) throws ParseTreeException
    {
-      if (getType(p) == OJSystem.BOOLEAN)
+      if (getType(p) == OJSystem.BOOLEAN
+              && Rules.canApply(p, Rules.Mutation.COI_NOT, this))
       {
          outputToFile(p);
       }
@@ -51,7 +53,8 @@ public class COI extends MethodLevelMutator
 
    public void visit( FieldAccess p ) throws ParseTreeException
    {
-      if (getType(p) == OJSystem.BOOLEAN)
+      if (getType(p) == OJSystem.BOOLEAN
+              && Rules.canApply(p, Rules.Mutation.COI_NOT, this))
       {
          outputToFile(p);
       }
@@ -64,7 +67,8 @@ public class COI extends MethodLevelMutator
       Expression right = p.getRight();
       right.accept(this);
 
-      if (getType(p) == OJSystem.BOOLEAN)
+      if (getType(p) == OJSystem.BOOLEAN
+              && Rules.canApply(p, Rules.Mutation.COI_NOT, this))
       {
          outputToFile(p);
       }

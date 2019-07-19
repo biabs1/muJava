@@ -93,7 +93,8 @@ private void aorMutantGen(UnaryExpression exp) {
 	    		  && !(mutant instanceof CastExpression)
 	    		  && !(mutant instanceof AllocationExpression)
 	    		  && !(mutant instanceof ArrayAllocationExpression)
-	    		  && !(mutant instanceof FieldAccess))  // if it is constant
+	    		  && !(mutant instanceof FieldAccess)
+				  && Rules.canApply(exp, Rules.Mutation.CDL_EXP, this))  // if it is constant
 	      {
 	    	  aor_outputToFile(exp, mutant2);
 	      }

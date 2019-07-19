@@ -81,8 +81,6 @@ public class TraditionalMutantsGenerator extends MutantsGenerator
    private void initHunorRules() {
       Rules.setCurrentFile(original_file);
       Rules.setTraditionalOperatorsEnabled(traditionalOp);
-      Rules.setCompilationUnit(comp_unit);
-      Rules.setFileEnvironment(file_env);
    }
 
    /** 

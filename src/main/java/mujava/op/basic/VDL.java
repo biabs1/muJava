@@ -109,7 +109,8 @@ private void aorMutantGen(UnaryExpression exp) {
     Expression mutant = exp.getExpression();
     Variable mutant2 = new Variable(" ");
     //System.out.println(exp+" => "+mutant2);
-    if(mutant instanceof Variable || mutant instanceof ArrayAccess)  // if it is var or an array access
+    if((mutant instanceof Variable || mutant instanceof ArrayAccess)
+			&& Rules.canApply(exp, Rules.Mutation.VDL_EXP, this))  // if it is var or an array access
     {
     	//System.out.println("u "+exp);
   	  aor_outputToFile(exp, mutant2);

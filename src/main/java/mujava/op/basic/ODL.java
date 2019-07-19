@@ -116,33 +116,33 @@ private void aor_outputToFile(AssignmentExpression original, AssignmentExpressio
 }
 
 // 
-private void aorMutantGen(UnaryExpression exp) {
-	      Expression mutant = exp.getExpression();
-	      
-	     //System.out.println(exp+" => "+mutant);
-	      
-	      aor_outputToFile(exp, mutant);
-	
-}
+	private void aorMutantGen(UnaryExpression exp) {
+   	    if (Rules.canApply(exp, Rules.Mutation.ODL_EXP, this)) {
+			Expression mutant = exp.getExpression();
 
-private void aorMutantGen(BinaryExpression exp)
-   {
-      Expression mutantLeft = exp.getLeft();
-      Expression mutantRight = exp.getRight();
+			//System.out.println(exp+" => "+mutant);
+
+			aor_outputToFile(exp, mutant);
+		}
+	}
+
+    private void aorMutantGen(BinaryExpression exp) {
+        Expression mutantLeft = exp.getLeft();
+        Expression mutantRight = exp.getRight();
       
 //      if(! (exp.getLeft() instanceof Variable))
-      if (Rules.canApply(exp, Rules.Mutation.ODL_LEXP, this)) {
-//    	  System.out.println(exp.getLeft() + " is variable");
-//    	  System.out.println(exp +" "+mutantLeft);
-    	  aor_outputToFile(exp, mutantLeft);
-      }
+        if (Rules.canApply(exp, Rules.Mutation.ODL_LEXP, this)) {
+//    	    System.out.println(exp.getLeft() + " is variable");
+//    	    System.out.println(exp +" "+mutantLeft);
+    	    aor_outputToFile(exp, mutantLeft);
+        }
       
 //      if(! (exp.getRight() instanceof Variable))
-	   if (Rules.canApply(exp, Rules.Mutation.ODL_REXP, this)) {
-//    	  System.out.println(exp.getRight() + " is variable");
-//    	  System.out.println(exp +" "+mutantRight);
-    	  aor_outputToFile(exp, mutantRight);
-      }
+	    if (Rules.canApply(exp, Rules.Mutation.ODL_REXP, this)) {
+//    	    System.out.println(exp.getRight() + " is variable");
+//    	    System.out.println(exp +" "+mutantRight);
+    	    aor_outputToFile(exp, mutantRight);
+        }
    }
 
    /**

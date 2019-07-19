@@ -15,6 +15,7 @@
  */ 
 package mujava.op.basic;
 
+import br.ufal.ic.easy.hunor.Rules;
 import openjava.mop.*;
 import openjava.ptree.*;
 import java.io.*;
@@ -60,21 +61,24 @@ public class LOR extends MethodLevelMutator
    {
       BinaryExpression mutant;
 
-      if (op != BinaryExpression.BITAND)
+      if (op != BinaryExpression.BITAND
+              && Rules.canApply(exp, Rules.Mutation.LOR_BITAND, this))
       {
          mutant = (BinaryExpression)(exp.makeRecursiveCopy());
          mutant.setOperator(BinaryExpression.BITAND);
          outputToFile(exp, mutant);
       }
       
-      if (op != BinaryExpression.BITOR)
+      if (op != BinaryExpression.BITOR
+              && Rules.canApply(exp, Rules.Mutation.LOR_BITOR, this))
       {
          mutant = (BinaryExpression)(exp.makeRecursiveCopy());
          mutant.setOperator(BinaryExpression.BITOR);
          outputToFile(exp, mutant);
       }
       
-      if (op != BinaryExpression.XOR)
+      if (op != BinaryExpression.XOR
+              && Rules.canApply(exp, Rules.Mutation.LOR_BITXOR, this))
       {
          mutant = (BinaryExpression)(exp.makeRecursiveCopy());
          mutant.setOperator(BinaryExpression.XOR);

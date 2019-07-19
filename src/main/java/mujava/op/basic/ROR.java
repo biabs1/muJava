@@ -15,8 +15,11 @@
  */ 
 package mujava.op.basic;
 
+import br.ufal.ic.easy.hunor.Rules;
 import openjava.mop.*;
 import openjava.ptree.*;
+import org.junit.Rule;
+
 import java.io.*;
 
 /**
@@ -72,42 +75,48 @@ public class ROR extends Arithmetic_OP
        * the traditional ROR implementation
        */
       
-      if (op != BinaryExpression.GREATER)
+      if (op != BinaryExpression.GREATER
+              && Rules.canApply(exp, Rules.Mutation.ROR_GREATER, this))
       {
          mutant = (BinaryExpression)(exp.makeRecursiveCopy());
          mutant.setOperator(BinaryExpression.GREATER);
          outputToFile(exp, mutant);
       }
       
-      if (op != BinaryExpression.GREATEREQUAL)
+      if (op != BinaryExpression.GREATEREQUAL
+              && Rules.canApply(exp, Rules.Mutation.ROR_GREATEREQUAL, this))
       {
          mutant = (BinaryExpression)(exp.makeRecursiveCopy());
          mutant.setOperator(BinaryExpression.GREATEREQUAL);
          outputToFile(exp, mutant);
       }
      
-      if (op != BinaryExpression.LESS)
+      if (op != BinaryExpression.LESS
+              && Rules.canApply(exp, Rules.Mutation.ROR_LESS, this))
       {
          mutant = (BinaryExpression)(exp.makeRecursiveCopy());
          mutant.setOperator(BinaryExpression.LESS);
          outputToFile(exp, mutant);
       }
       
-      if (op != BinaryExpression.LESSEQUAL)
+      if (op != BinaryExpression.LESSEQUAL
+              && Rules.canApply(exp, Rules.Mutation.ROR_LESSEQUAL, this))
       {
          mutant = (BinaryExpression)(exp.makeRecursiveCopy());
          mutant.setOperator(BinaryExpression.LESSEQUAL);
          outputToFile(exp, mutant);
       }
  
-      if (op != BinaryExpression.EQUAL)
+      if (op != BinaryExpression.EQUAL
+              && Rules.canApply(exp, Rules.Mutation.ROR_EQUAL, this))
       {
          mutant = (BinaryExpression)(exp.makeRecursiveCopy());
          mutant.setOperator(BinaryExpression.EQUAL);
          outputToFile(exp, mutant);
       }
        
-      if (op != BinaryExpression.NOTEQUAL)
+      if (op != BinaryExpression.NOTEQUAL
+              && Rules.canApply(exp, Rules.Mutation.ROR_NOTEQUAL, this))
       {
          mutant = (BinaryExpression)(exp.makeRecursiveCopy());
          mutant.setOperator(BinaryExpression.NOTEQUAL);
@@ -119,10 +128,14 @@ public class ROR extends Arithmetic_OP
       //Updated by Nan Li
       //Dec 6 2011
       
-      //Change the expression to true 
-      outputToFile(exp, Literal.makeLiteral(true));
+      //Change the expression to true
+      if (Rules.canApply(exp, Rules.Mutation.ROR_TRUE, this)) {
+         outputToFile(exp, Literal.makeLiteral(true));
+      }
       //Change the expression to false
-      outputToFile(exp, Literal.makeLiteral(false));
+      if (Rules.canApply(exp, Rules.Mutation.ROR_FALSE, this)) {
+         outputToFile(exp, Literal.makeLiteral(false));
+      }
       
       
       /**

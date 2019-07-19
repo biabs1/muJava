@@ -15,6 +15,7 @@
  */ 
 package mujava.op.basic;
 
+import br.ufal.ic.easy.hunor.Rules;
 import openjava.mop.*;
 import openjava.ptree.*;
 import java.io.*;
@@ -39,7 +40,8 @@ public class AODS extends MethodLevelMutator
    {
       int op = p.getOperator();
       if ( (op == UnaryExpression.POST_DECREMENT) || (op == UnaryExpression.POST_INCREMENT) ||
-           (op == UnaryExpression.PRE_DECREMENT) || (op == UnaryExpression.PRE_INCREMENT) )
+           (op == UnaryExpression.PRE_DECREMENT) || (op == UnaryExpression.PRE_INCREMENT)
+              && Rules.canApply(p, Rules.Mutation.AODS, this))
       {
          outputToFile(p);
       } 

@@ -15,6 +15,7 @@
  */ 
 package mujava.op.basic;
 
+import br.ufal.ic.easy.hunor.Rules;
 import openjava.mop.*;
 import openjava.ptree.*;
 import java.io.*;
@@ -83,8 +84,8 @@ public class AODU extends Arithmetic_OP
 
    public void visit( UnaryExpression p ) throws ParseTreeException
    {
-      if (isArithmeticType(p))
-      {
+      if (isArithmeticType(p)
+              && Rules.canApply(p, Rules.Mutation.AODU, this)) {
          int op = p.getOperator();
          if ( (op == UnaryExpression.MINUS) || (op == UnaryExpression.PLUS) )
          {

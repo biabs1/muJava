@@ -15,6 +15,7 @@
  */ 
 package mujava.op.basic;
 
+import br.ufal.ic.easy.hunor.Rules;
 import openjava.mop.*;
 import openjava.ptree.*;
 import java.io.*;
@@ -38,7 +39,7 @@ public class LOD extends MethodLevelMutator
    public void visit( UnaryExpression p ) throws ParseTreeException
    {
       int op = p.getOperator();
-      if ( op == UnaryExpression.BIT_NOT)
+      if ( op == UnaryExpression.BIT_NOT && Rules.canApply(p, Rules.Mutation.LOD, this))
       {
          outputToFile(p);
       }

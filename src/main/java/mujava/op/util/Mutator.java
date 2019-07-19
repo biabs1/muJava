@@ -41,7 +41,7 @@ public class Mutator extends mujava.openjava.extension.VariableBinder
    }
 
    //--------------
-   protected OJClass getType( Expression p ) throws ParseTreeException 
+   public OJClass getType( Expression p ) throws ParseTreeException
    {
       OJClass result = null;
       try 

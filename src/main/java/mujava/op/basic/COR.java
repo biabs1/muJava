@@ -15,6 +15,7 @@
  */ 
 package mujava.op.basic;
 
+import br.ufal.ic.easy.hunor.Rules;
 import openjava.mop.*;
 import openjava.ptree.*;
 import java.io.*;
@@ -65,21 +66,24 @@ public class COR extends MethodLevelMutator
    private void corMutantGen(BinaryExpression exp, int op)
    {
       BinaryExpression mutant;
-      if ((op != BinaryExpression.LOGICAL_AND) && (op != BinaryExpression.BITAND))
+      if ((op != BinaryExpression.LOGICAL_AND) && (op != BinaryExpression.BITAND)
+              && Rules.canApply(exp, Rules.Mutation.COR_AND, this))
       {
          mutant = (BinaryExpression)(exp.makeRecursiveCopy());
          mutant.setOperator(BinaryExpression.LOGICAL_AND);
          outputToFile(exp, mutant);
       }
       
-      if ((op != BinaryExpression.LOGICAL_OR) && (op != BinaryExpression.BITOR))
+      if ((op != BinaryExpression.LOGICAL_OR) && (op != BinaryExpression.BITOR)
+         && Rules.canApply(exp, Rules.Mutation.COR_OR, this))
       {
          mutant = (BinaryExpression)(exp.makeRecursiveCopy());
          mutant.setOperator(BinaryExpression.LOGICAL_OR);
          outputToFile(exp, mutant);
       }
       
-      if (op != BinaryExpression.XOR)
+      if (op != BinaryExpression.XOR
+              && Rules.canApply(exp, Rules.Mutation.COR_XOR, this))
       {
          mutant = (BinaryExpression)(exp.makeRecursiveCopy());
          mutant.setOperator(BinaryExpression.XOR);

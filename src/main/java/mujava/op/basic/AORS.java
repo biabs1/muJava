@@ -15,6 +15,7 @@
  */ 
 package mujava.op.basic;
 
+import br.ufal.ic.easy.hunor.Rules;
 import openjava.mop.*;
 import openjava.ptree.*;
 import java.io.*;
@@ -73,15 +74,15 @@ public class AORS extends MethodLevelMutator
       UnaryExpression mutant;
       if (isPrePostEQ)
       {  // Inside FOR stmts
-         if ( (!(op == UnaryExpression.PRE_INCREMENT)) && (!(op == UnaryExpression.POST_INCREMENT)))
-         {
+         if ( (!(op == UnaryExpression.PRE_INCREMENT)) && (!(op == UnaryExpression.POST_INCREMENT))
+                 && Rules.canApply(p, Rules.Mutation.AORS_POSINC, this)) {
             mutant = (UnaryExpression)(p.makeRecursiveCopy());
             mutant.setOperator(UnaryExpression.POST_INCREMENT);
             outputToFile(p, mutant);
          }
         
-         if ( (!(op == UnaryExpression.PRE_DECREMENT)) && (!(op == UnaryExpression.POST_DECREMENT)))
-         {
+         if ( (!(op == UnaryExpression.PRE_DECREMENT)) && (!(op == UnaryExpression.POST_DECREMENT))
+                 && Rules.canApply(p, Rules.Mutation.AORS_POSDEC, this)) {
             mutant = (UnaryExpression)(p.makeRecursiveCopy());
             mutant.setOperator(UnaryExpression.POST_DECREMENT);
             outputToFile(p,mutant);
@@ -89,29 +90,29 @@ public class AORS extends MethodLevelMutator
       }  
       else
       {
-         if (!(op == UnaryExpression.POST_DECREMENT))
-         {
+         if (!(op == UnaryExpression.POST_DECREMENT)
+                 && Rules.canApply(p, Rules.Mutation.AORS_POSDEC, this)) {
             mutant = (UnaryExpression)(p.makeRecursiveCopy());
             mutant.setOperator(UnaryExpression.POST_DECREMENT);
             outputToFile(p, mutant);
          }
          
-         if (!(op == UnaryExpression.POST_INCREMENT))
-         {
+         if (!(op == UnaryExpression.POST_INCREMENT)
+                 && Rules.canApply(p, Rules.Mutation.AORS_POSINC, this)) {
             mutant = (UnaryExpression)(p.makeRecursiveCopy());
             mutant.setOperator(UnaryExpression.POST_INCREMENT);
             outputToFile(p, mutant);
          }
          
-         if (!(op == UnaryExpression.PRE_DECREMENT))
-         {
+         if (!(op == UnaryExpression.PRE_DECREMENT)
+                 && Rules.canApply(p, Rules.Mutation.AORS_PREDEC, this)) {
             mutant = (UnaryExpression)(p.makeRecursiveCopy());
             mutant.setOperator(UnaryExpression.PRE_DECREMENT);
             outputToFile(p, mutant);
          }
       
-         if (!(op == UnaryExpression.PRE_INCREMENT))
-         {
+         if (!(op == UnaryExpression.PRE_INCREMENT)
+                 && Rules.canApply(p, Rules.Mutation.AORS_PREINC, this)) {
             mutant = (UnaryExpression)(p.makeRecursiveCopy());
             mutant.setOperator(UnaryExpression.PRE_INCREMENT);
             outputToFile(p, mutant);
