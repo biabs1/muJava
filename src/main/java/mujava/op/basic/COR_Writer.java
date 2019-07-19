@@ -28,7 +28,7 @@ import java.io.*;
 public class COR_Writer extends TraditionalMutantCodeWriter
 {
    BinaryExpression original;
-   BinaryExpression mutant;
+   Expression mutant;
 
    public COR_Writer( String file_name, PrintWriter out ) 
    {
@@ -40,7 +40,7 @@ public class COR_Writer extends TraditionalMutantCodeWriter
     * @param exp1
     * @param exp2
     */
-   public void setMutant(BinaryExpression exp1, BinaryExpression exp2)
+   public void setMutant(BinaryExpression exp1, Expression exp2)
    {
       original = exp1;
       mutant = exp2;
@@ -49,28 +49,27 @@ public class COR_Writer extends TraditionalMutantCodeWriter
    /**
     * Log mutated line
     */
-   public void visit( BinaryExpression p ) throws ParseTreeException
-   {
-      if (isSameObject(p, original))
-      {
+   public void visit( BinaryExpression p ) throws ParseTreeException {
+      if (isSameObject(p, original)) {
          super.visit(mutant);
-         // -----------------------------------------------------------
          mutated_line = line_num;
-         String log_str = p.toFlattenString()+ "  =>  " +mutant.toFlattenString();
+         String log_str = p.toFlattenString()+ "  =>  " + mutant.toFlattenString();
          writeLog(removeNewline(appendTargetInfo(p, log_str, getLabel(), getOriginalId())));
-         // -------------------------------------------------------------
-      }
-      else
-      {
+      } else {
          super.visit(p);
       }
    }
 
    private String getLabel() {
-      return "COR " + mutant.operatorString();
+      if (mutant instanceof BinaryExpression) {
+         return "COR " + ((BinaryExpression) mutant).operatorString();
+      }
+
+      return "COR " + mutant.toString();
    }
 
    private String getOriginalId() {
       return "lexp " + original.operatorString() + " rexp";
    }
+
 }

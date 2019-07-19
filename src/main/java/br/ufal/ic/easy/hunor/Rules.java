@@ -21,7 +21,7 @@ public class Rules {
         AOIS_PREINC, AOIS_PREDEC, AOIS_POSINC, AOIS_POSDEC,
         LOI_BITNOT,
         COI_NOT,
-        COR_AND, COR_OR, COR_XOR,
+        COR_AND, COR_OR, COR_XOR, COR_EQUAL, COR_NOTEQUAL, COR_TRUE, COR_FALSE,
         ROR_GREATER, ROR_GREATEREQUAL, ROR_LESS, ROR_LESSEQUAL, ROR_EQUAL,
         ROR_NOTEQUAL, ROR_TRUE, ROR_FALSE,
         LOR_BITOR, LOR_BITAND, LOR_BITXOR,
@@ -32,7 +32,8 @@ public class Rules {
         AORS_PREINC, AORS_PREDEC, AORS_POSINC, AORS_POSDEC
     }
 
-    private static boolean enabled = true;
+    private static boolean enabled = false;
+    private static boolean newMutationsEnabled = false;
     private static List<String> traditionalOperatorsEnabled = Collections.emptyList();
     private static File currentFile;
     private static MethodLevelMutator mutator;
@@ -620,12 +621,16 @@ public class Rules {
         return false;
     }
 
-    public static void enable() {
-        enabled = true;
+    public static boolean isNewMutationsEnabled() {
+        return newMutationsEnabled;
     }
 
-    public static void disable() {
-        enabled = false;
+    public static void setEnabledRules(boolean enable) {
+        enabled = enable;
+    }
+
+    public static void setNewMutationsEnabled(boolean enable) {
+        newMutationsEnabled = enable;
     }
 
 }

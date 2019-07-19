@@ -18,7 +18,6 @@ package mujava.op.basic;
 import br.ufal.ic.easy.hunor.Rules;
 import openjava.mop.*;
 import openjava.ptree.*;
-import org.junit.Rule;
 
 import java.io.*;
 

@@ -89,6 +89,28 @@ public class COR extends MethodLevelMutator
          mutant.setOperator(BinaryExpression.XOR);
          outputToFile(exp, mutant);
       }
+
+      if (Rules.isNewMutationsEnabled()) {
+         if (Rules.canApply(exp, Rules.Mutation.COR_EQUAL, this)) {
+            mutant = (BinaryExpression) (exp.makeRecursiveCopy());
+            mutant.setOperator(BinaryExpression.EQUAL);
+            outputToFile(exp, mutant);
+         }
+
+         if (Rules.canApply(exp, Rules.Mutation.COR_NOTEQUAL, this)) {
+            mutant = (BinaryExpression) (exp.makeRecursiveCopy());
+            mutant.setOperator(BinaryExpression.NOTEQUAL);
+            outputToFile(exp, mutant);
+         }
+
+         if (Rules.canApply(exp, Rules.Mutation.COR_TRUE, this)) {
+            outputToFile(exp, Literal.makeLiteral(true));
+         }
+
+         if (Rules.canApply(exp, Rules.Mutation.COR_FALSE, this)) {
+            outputToFile(exp, Literal.makeLiteral(false));
+         }
+      }
    }
 
    /**
@@ -96,9 +118,9 @@ public class COR extends MethodLevelMutator
     * @param original
     * @param mutant
     */
-   public void outputToFile(BinaryExpression original, BinaryExpression mutant)
+   public void outputToFile(BinaryExpression original, Expression mutant)
    {
-      if (comp_unit == null) 
+      if (comp_unit == null)
     	 return;
 
       String f_name;
@@ -106,14 +128,14 @@ public class COR extends MethodLevelMutator
       f_name = getSourceName("COR");
       String mutant_dir = getMuantID("COR");
 
-      try 
+      try
       {
 		 PrintWriter out = getPrintWriter(f_name);
 		 COR_Writer writer = new COR_Writer(mutant_dir, out);
 		 writer.setMutant(original, mutant);
          writer.setMethodSignature(currentMethodSignature);
 		 comp_unit.accept( writer );
-		 out.flush();  
+		 out.flush();
 		 out.close();
       } catch ( IOException e ) {
 		 System.err.println( "fails to create " + f_name );
