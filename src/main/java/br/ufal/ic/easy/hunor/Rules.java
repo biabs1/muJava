@@ -408,6 +408,9 @@ public class Rules {
     private static Set<Mutation> targetLExpLogicalAndRExp(BinaryExpression target) {
         Set<Mutation> mutations = new HashSet<>(getDeletionMutations());
 
+        mutations.add(Mutation.COR_FALSE);
+        mutations.add(Mutation.COR_EQUAL);
+
         setMutationsTo(target.getLeft(), new HashSet<>());
         setMutationsTo(target.getRight(), new HashSet<>());
 
@@ -417,7 +420,8 @@ public class Rules {
     private static Set<Mutation> targetLExpLogicalOrRExp(BinaryExpression target) {
         Set<Mutation> mutations = new HashSet<>(getDeletionMutations());
 
-        mutations.add(Mutation.COR_XOR);
+        mutations.add(Mutation.COR_TRUE);
+        mutations.add(Mutation.COR_NOTEQUAL);
 
         setMutationsTo(target.getLeft(), new HashSet<>());
         setMutationsTo(target.getRight(), new HashSet<>());
@@ -426,7 +430,10 @@ public class Rules {
     }
 
     private static Set<Mutation> targetLExpXorRExp(BinaryExpression target) {
-        Set<Mutation> mutations = Collections.singleton(Mutation.COR_OR);
+        Set<Mutation> mutations = new HashSet<>();
+
+        mutations.add(Mutation.COR_FALSE);
+        mutations.add(Mutation.COR_OR);
 
         setMutationsTo(target.getLeft(), new HashSet<>());
         setMutationsTo(target.getRight(), new HashSet<>());
