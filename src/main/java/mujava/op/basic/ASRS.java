@@ -15,6 +15,7 @@
  */ 
 package mujava.op.basic;
 
+import br.ufal.ic.easy.hunor.Rules;
 import openjava.mop.*;
 import openjava.ptree.*;
 import java.io.*;
@@ -78,32 +79,32 @@ public class ASRS extends MethodLevelMutator
    void genArithmeticMutants(AssignmentExpression p, int op)
    {
       AssignmentExpression mutant;
-      if (!(op == AssignmentExpression.ADD))
-      {
+      if (!(op == AssignmentExpression.ADD)
+              && Rules.canApply(p, Rules.Mutation.ASRS_ADD, this)) {
          mutant = (AssignmentExpression)(p.makeRecursiveCopy());
          mutant.setOperator(AssignmentExpression.ADD);
          outputToFile(p, mutant);
       }
-      if (!(op == AssignmentExpression.DIVIDE))
-      {
+      if (!(op == AssignmentExpression.DIVIDE)
+              && Rules.canApply(p, Rules.Mutation.ASRS_DIV, this)) {
          mutant = (AssignmentExpression)(p.makeRecursiveCopy());
          mutant.setOperator(AssignmentExpression.DIVIDE);
          outputToFile(p, mutant);
       }
-      if (!(op == AssignmentExpression.MULT))
-      {
+      if (!(op == AssignmentExpression.MULT)
+              && Rules.canApply(p, Rules.Mutation.ASRS_MUL, this)) {
          mutant = (AssignmentExpression)(p.makeRecursiveCopy());
          mutant.setOperator(AssignmentExpression.MULT);
          outputToFile(p,mutant);
       }  
-      if (!(op == AssignmentExpression.SUB))
-      {
+      if (!(op == AssignmentExpression.SUB)
+              && Rules.canApply(p, Rules.Mutation.ASRS_SUB, this)) {
          mutant = (AssignmentExpression)(p.makeRecursiveCopy());
          mutant.setOperator(AssignmentExpression.SUB);
          outputToFile(p,mutant);
       }  
-      if (!(op == AssignmentExpression.MOD))
-      {
+      if (!(op == AssignmentExpression.MOD)
+              && Rules.canApply(p, Rules.Mutation.ASRS_MOD, this)) {
          mutant = (AssignmentExpression)(p.makeRecursiveCopy());
          mutant.setOperator(AssignmentExpression.MOD);
          outputToFile(p,mutant);
@@ -117,20 +118,20 @@ public class ASRS extends MethodLevelMutator
    void genLogicalMutants(AssignmentExpression p, int op)
    {
       AssignmentExpression mutant;
-      if (!(op == AssignmentExpression.AND))
-      {
+      if (!(op == AssignmentExpression.AND)
+              && Rules.canApply(p, Rules.Mutation.ASRS_AND, this)) {
          mutant = (AssignmentExpression)(p.makeRecursiveCopy());
          mutant.setOperator(AssignmentExpression.AND);
          outputToFile(p, mutant);
       }
-      if (!(op == AssignmentExpression.OR))
-      {
+      if (!(op == AssignmentExpression.OR)
+              && Rules.canApply(p, Rules.Mutation.ASRS_OR, this)) {
          mutant = (AssignmentExpression)(p.makeRecursiveCopy());
          mutant.setOperator(AssignmentExpression.OR);
          outputToFile(p, mutant);
       }
-      if (!(op == AssignmentExpression.XOR))
-      {
+      if (!(op == AssignmentExpression.XOR)
+              && Rules.canApply(p, Rules.Mutation.ASRS_XOR, this)) {
          mutant = (AssignmentExpression)(p.makeRecursiveCopy());
          mutant.setOperator(AssignmentExpression.XOR);
          outputToFile(p, mutant);
@@ -144,20 +145,20 @@ public class ASRS extends MethodLevelMutator
    void genShiftMutants(AssignmentExpression p, int op)
    {
       AssignmentExpression mutant;
-      if (!(op == AssignmentExpression.SHIFT_L))
-      {
+      if (!(op == AssignmentExpression.SHIFT_L)
+              && Rules.canApply(p, Rules.Mutation.ASRS_LSH, this)) {
          mutant = (AssignmentExpression)(p.makeRecursiveCopy());
          mutant.setOperator(AssignmentExpression.SHIFT_L);
          outputToFile(p, mutant);
       }
-      if (!(op == AssignmentExpression.SHIFT_R))
-      {
+      if (!(op == AssignmentExpression.SHIFT_R)
+              && Rules.canApply(p, Rules.Mutation.ASRS_RSH, this)) {
          mutant = (AssignmentExpression)(p.makeRecursiveCopy());
          mutant.setOperator(AssignmentExpression.SHIFT_R);
          outputToFile(p, mutant);
       }
-      if (!(op == AssignmentExpression.SHIFT_RR))
-      {
+      if (!(op == AssignmentExpression.SHIFT_RR)
+              && Rules.canApply(p, Rules.Mutation.ASRS_URS, this)) {
          mutant = (AssignmentExpression)(p.makeRecursiveCopy());
          mutant.setOperator(AssignmentExpression.SHIFT_R);
          outputToFile(p, mutant);

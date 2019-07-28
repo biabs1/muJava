@@ -67,7 +67,7 @@ public class ASRS_Writer extends TraditionalMutantCodeWriter
    }
 
    private String getLabel() {
-      return "AORS " + assign_mutant.operatorString();
+      return "ASRS " + assign_mutant.operatorString();
    }
 
    private String getOriginalId() {

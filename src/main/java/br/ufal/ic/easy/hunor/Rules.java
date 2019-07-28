@@ -16,7 +16,7 @@ public class Rules {
         AORB_PLUS, AORB_MINUS, AORB_TIMES, AORB_DIVIDE, AORB_MOD,
         CDL_LEXP, CDL_REXP, CDL_EXP,
         VDL_LEXP, VDL_REXP, VDL_EXP,
-        ODL_LEXP, ODL_REXP, ODL_EXP,
+        ODL_LEXP, ODL_REXP, ODL_EXP, ODL_ASSING,
         AOIU_MINUS,
         AOIS_PREINC, AOIS_PREDEC, AOIS_POSINC, AOIS_POSDEC,
         LOI_BITNOT,
@@ -29,7 +29,9 @@ public class Rules {
         COD,
         AODU,
         AODS,
-        AORS_PREINC, AORS_PREDEC, AORS_POSINC, AORS_POSDEC
+        AORS_PREINC, AORS_PREDEC, AORS_POSINC, AORS_POSDEC,
+        ASRS_ADD, ASRS_SUB, ASRS_MUL, ASRS_DIV, ASRS_MOD, ASRS_RSH, ASRS_LSH,
+        ASRS_URS, ASRS_AND, ASRS_OR, ASRS_XOR
     }
 
     private static boolean enabled = false;
@@ -92,8 +94,9 @@ public class Rules {
             return allowedMutationsFor((UnaryExpression) target);
         } else if (target instanceof Variable || target instanceof FieldAccess) {
             return allowedMutationsFor((Expression) target);
+        } else if (target instanceof AssignmentExpression) {
+            return allowedMutationsFor((AssignmentExpression) target);
         }
-
 
         return Optional.empty();
     }
@@ -156,17 +159,17 @@ public class Rules {
         } else if (operator == UnaryExpression.MINUS) {
             return Optional.of(targetMinusExp(target));
         } else if (operator == UnaryExpression.NOT) {
-            return Optional.of(targeNotExp(target));
+            return Optional.of(targetNotExp(target));
         } else if (operator == UnaryExpression.BIT_NOT) {
-            return Optional.of(targeBitNotExp(target));
+            return Optional.of(targetBitNotExp(target));
         } else if (operator == UnaryExpression.PRE_INCREMENT) {
-            return Optional.of(targePreIncExp(target));
+            return Optional.of(targetPreIncExp(target));
         } else if (operator == UnaryExpression.PRE_DECREMENT) {
-            return Optional.of(targePreDecExp(target));
+            return Optional.of(targetPreDecExp(target));
         } else if (operator == UnaryExpression.POST_INCREMENT) {
-            return Optional.of(targePosIncExp(target));
+            return Optional.of(targetPosIncExp(target));
         } else if (operator == UnaryExpression.POST_DECREMENT) {
-            return Optional.of(targePosDecExp(target));
+            return Optional.of(targetPosDecExp(target));
         }
 
         return Optional.empty();
@@ -180,6 +183,189 @@ public class Rules {
         }
 
         return Optional.empty();
+    }
+
+    private static Optional<Set<Mutation>> allowedMutationsFor(AssignmentExpression target) {
+        int operator = target.getOperator();
+
+        if (operator == AssignmentExpression.ADD) {
+            return Optional.of(targetAssignmentAdd(target));
+        } else if (operator == AssignmentExpression.SUB) {
+            return Optional.of(targetAssignmentSub(target));
+        } else if (operator == AssignmentExpression.MULT) {
+            return Optional.of(targetAssignmentMul(target));
+        } else if (operator == AssignmentExpression.DIVIDE) {
+            return Optional.of(targetAssignmentDiv(target));
+        } else if (operator == AssignmentExpression.MOD) {
+            return Optional.of(targetAssignmentMod(target));
+        } else if (operator == AssignmentExpression.SHIFT_R) {
+            return Optional.of(targetAssignmentShiftRight(target));
+        } else if (operator == AssignmentExpression.SHIFT_L) {
+            return Optional.of(targetAssignmentShiftLeft(target));
+        } else if (operator == AssignmentExpression.SHIFT_RR) {
+            return Optional.of(targetAssignmentUnsignedShitRight(target));
+        } else if (operator == AssignmentExpression.AND) {
+            return Optional.of(targetAssignmentAnd(target));
+        } else if (operator == AssignmentExpression.OR) {
+            return Optional.of(targetAssignmentOr(target));
+        } else if (operator == AssignmentExpression.XOR) {
+            return Optional.of(targetAssignmentXor(target));
+        }
+
+        return Optional.empty();
+    }
+
+    private static Set<Mutation> targetAssignmentAdd(AssignmentExpression target) {
+        Set<Mutation> mutations = new HashSet<>();
+
+        mutations.add(Mutation.ASRS_SUB);
+        mutations.add(Mutation.ASRS_MOD);
+        mutations.add(Mutation.ODL_ASSING);
+
+        setMutationsTo(target.getLeft(), new HashSet<>());
+        setMutationsTo(target.getRight(), new HashSet<>());
+
+        return mutations;
+    }
+
+    private static Set<Mutation> targetAssignmentSub(AssignmentExpression target) {
+        Set<Mutation> mutations = new HashSet<>();
+
+        mutations.add(Mutation.ASRS_ADD);
+        mutations.add(Mutation.ASRS_MOD);
+
+        setMutationsTo(target.getLeft(), new HashSet<>());
+        setMutationsTo(target.getRight(), new HashSet<>());
+
+        return mutations;
+    }
+
+    private static Set<Mutation> targetAssignmentMul(AssignmentExpression target) {
+        Set<Mutation> mutations = new HashSet<>();
+
+        mutations.add(Mutation.ASRS_DIV);
+        mutations.add(Mutation.ODL_ASSING);
+
+        setMutationsTo(target.getLeft(), new HashSet<>());
+        setMutationsTo(target.getRight(), Collections.singleton(Mutation.AOIU_MINUS));
+
+
+        return mutations;
+    }
+
+    private static Set<Mutation> targetAssignmentDiv(AssignmentExpression target) {
+        Set<Mutation> mutations = new HashSet<>();
+
+        mutations.add(Mutation.ASRS_MOD);
+        mutations.add(Mutation.ASRS_MUL);
+        mutations.add(Mutation.ODL_ASSING);
+
+        setMutationsTo(target.getLeft(), new HashSet<>());
+        setMutationsTo(target.getRight(), new HashSet<>(Arrays.asList(
+                Mutation.AOIU_MINUS, Mutation.AOIS_PREDEC, Mutation.AOIS_PREINC
+        )));
+
+
+        return mutations;
+    }
+
+    private static Set<Mutation> targetAssignmentMod(AssignmentExpression target) {
+        Set<Mutation> mutations = new HashSet<>();
+
+        mutations.add(Mutation.ASRS_ADD);
+        mutations.add(Mutation.ASRS_SUB);
+        mutations.add(Mutation.ASRS_MUL);
+        mutations.add(Mutation.ASRS_DIV);
+
+        setMutationsTo(target.getLeft(), new HashSet<>());
+        setMutationsTo(target.getRight(), new HashSet<>(Arrays.asList(
+                Mutation.AOIS_PREDEC, Mutation.AOIS_PREINC
+        )));
+
+
+        return mutations;
+    }
+
+    private static Set<Mutation> targetAssignmentShiftRight(AssignmentExpression target) {
+        Set<Mutation> mutations = new HashSet<>();
+
+        mutations.add(Mutation.ASRS_LSH);
+        mutations.add(Mutation.ODL_ASSING);
+
+        setMutationsTo(target.getLeft(), new HashSet<>());
+        setMutationsTo(target.getRight(), new HashSet<>(Arrays.asList(
+                Mutation.AOIU_MINUS, Mutation.AOIS_PREDEC, Mutation.AOIS_PREINC
+        )));
+
+
+        return mutations;
+    }
+
+    private static Set<Mutation> targetAssignmentShiftLeft(AssignmentExpression target) {
+        Set<Mutation> mutations = new HashSet<>();
+
+        mutations.add(Mutation.ASRS_RSH);
+
+        setMutationsTo(target.getLeft(), new HashSet<>());
+        setMutationsTo(target.getRight(), new HashSet<>(Arrays.asList(
+                Mutation.AOIU_MINUS, Mutation.AOIS_PREDEC, Mutation.AOIS_PREINC
+        )));
+
+
+        return mutations;
+    }
+
+    private static Set<Mutation> targetAssignmentUnsignedShitRight(AssignmentExpression target) {
+        Set<Mutation> mutations = new HashSet<>();
+
+        mutations.add(Mutation.ASRS_RSH);
+
+        setMutationsTo(target.getLeft(), new HashSet<>());
+        setMutationsTo(target.getRight(), Collections.singleton(Mutation.AOIU_MINUS));
+
+
+        return mutations;
+    }
+
+    private static Set<Mutation> targetAssignmentAnd(AssignmentExpression target) {
+        Set<Mutation> mutations = new HashSet<>();
+
+        mutations.add(Mutation.ODL_ASSING);
+
+        setMutationsTo(target.getLeft(), new HashSet<>());
+        setMutationsTo(target.getRight(), new HashSet<>(Arrays.asList(
+                Mutation.AOIU_MINUS, Mutation.AOIS_PREDEC, Mutation.AOIS_PREINC
+        )));
+
+
+        return mutations;
+    }
+
+    private static Set<Mutation> targetAssignmentOr(AssignmentExpression target) {
+        Set<Mutation> mutations = new HashSet<>();
+
+        mutations.add(Mutation.ODL_ASSING);
+        mutations.add(Mutation.ASRS_XOR);
+
+        setMutationsTo(target.getLeft(), new HashSet<>());
+        setMutationsTo(target.getRight(), new HashSet<>(Arrays.asList(
+                Mutation.AOIU_MINUS, Mutation.AOIS_PREDEC, Mutation.AOIS_PREINC
+        )));
+
+
+        return mutations;
+    }
+
+    private static Set<Mutation> targetAssignmentXor(AssignmentExpression target) {
+        Set<Mutation> mutations = new HashSet<>();
+
+        mutations.add(Mutation.ASRS_OR);
+
+        setMutationsTo(target.getLeft(), new HashSet<>());
+        setMutationsTo(target.getRight(), new HashSet<>());
+
+
+        return mutations;
     }
 
     private static Set<Mutation> targetArithmeticExp() {
@@ -229,7 +415,7 @@ public class Rules {
         return mutations;
     }
 
-    private static Set<Mutation> targePreIncExp(UnaryExpression target) {
+    private static Set<Mutation> targetPreIncExp(UnaryExpression target) {
         Set<Mutation> mutations = new HashSet<>();
 
         setMutationsTo(target.getExpression(), Collections.emptySet());
@@ -245,7 +431,7 @@ public class Rules {
         return mutations;
     }
 
-    private static Set<Mutation> targePreDecExp(UnaryExpression target) {
+    private static Set<Mutation> targetPreDecExp(UnaryExpression target) {
         Set<Mutation> mutations = new HashSet<>();
 
         setMutationsTo(target.getExpression(), Collections.emptySet());
@@ -261,7 +447,7 @@ public class Rules {
         return mutations;
     }
 
-    private static Set<Mutation> targePosIncExp(UnaryExpression target) {
+    private static Set<Mutation> targetPosIncExp(UnaryExpression target) {
         Set<Mutation> mutations = new HashSet<>();
 
         setMutationsTo(target.getExpression(), Collections.emptySet());
@@ -273,7 +459,7 @@ public class Rules {
         return mutations;
     }
 
-    private static Set<Mutation> targePosDecExp(UnaryExpression target) {
+    private static Set<Mutation> targetPosDecExp(UnaryExpression target) {
         Set<Mutation> mutations = new HashSet<>();
 
         setMutationsTo(target.getExpression(), Collections.emptySet());
@@ -285,7 +471,7 @@ public class Rules {
         return mutations;
     }
 
-    private static Set<Mutation> targeNotExp(UnaryExpression target) {
+    private static Set<Mutation> targetNotExp(UnaryExpression target) {
         Set<Mutation> mutations = new HashSet<>();
 
         setMutationsTo(target.getExpression(), Collections.emptySet());
@@ -299,7 +485,7 @@ public class Rules {
         return mutations;
     }
 
-    private static Set<Mutation> targeBitNotExp(UnaryExpression target) {
+    private static Set<Mutation> targetBitNotExp(UnaryExpression target) {
         Set<Mutation> mutations = new HashSet<>();
 
         setMutationsTo(target.getExpression(), Collections.emptySet());

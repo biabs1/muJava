@@ -74,12 +74,9 @@ public class ODL extends Arithmetic_OP
   
    // for assignment, remove += -= *= ... with =
    private void aorMutantGen(AssignmentExpression exp) {	
-	   if(exp.getOperator()!=0)
-	   {
+	   if(exp.getOperator()!=0 && Rules.canApply(exp, Rules.Mutation.ODL_ASSING, this)) {
 		   AssignmentExpression mutant = new AssignmentExpression(exp.getLeft(), exp.getOperator(), exp.getRight());
 			mutant.setOperator(0);
-			
-			
 			
 			aor_outputToFile(exp, mutant);
 	   }
