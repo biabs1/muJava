@@ -129,6 +129,10 @@ public class Rules {
             return Optional.of(targetLExpEqualRExp(target));
         } else if (operator == BinaryExpression.NOTEQUAL && hasArithmeticType(target)) {
             return Optional.of(targetLExpNotEqualRExp(target));
+        } else if (operator == BinaryExpression.EQUAL && hasBooleanType(target)) {
+            return Optional.of(targetLExpEqualRExpBoolean(target));
+        } else if (operator == BinaryExpression.NOTEQUAL && hasBooleanType(target)) {
+            return Optional.of(targetLExpNotEqualRExpBoolean(target));
         } else if (operator == BinaryExpression.EQUAL && !hasArithmeticType(target)) {
             return Optional.of(targetLExpEqualObjectRExp(target));
         } else if (operator == BinaryExpression.NOTEQUAL && !hasArithmeticType(target)) {
@@ -182,6 +186,11 @@ public class Rules {
         Set<Mutation> mutations = new HashSet<>();
 
         mutations.add(Mutation.AOIU_MINUS);
+        mutations.add(Mutation.AOIS_POSDEC);
+        mutations.add(Mutation.AOIS_POSINC);
+        mutations.add(Mutation.AOIS_PREDEC);
+        mutations.add(Mutation.AOIS_PREINC);
+        mutations.add(Mutation.LOI_BITNOT);
 
         return mutations;
     }
@@ -351,16 +360,9 @@ public class Rules {
     }
 
     private static Set<Mutation> targetLExpTimesRExp(BinaryExpression target) {
-        Set<Mutation> mutations = new HashSet<>();
+        Set<Mutation> mutations = new HashSet<>(getDeletionMutations());
 
         mutations.add(Mutation.AORB_DIVIDE);
-
-        if (operatorEnabled("ODL")) {
-            mutations.add(Mutation.ODL_LEXP);
-        } else if (operatorEnabled("VDL") || operatorEnabled("CDL")) {
-            mutations.add(Mutation.VDL_LEXP);
-            mutations.add(Mutation.CDL_LEXP);
-        }
 
         setMutationsTo(target.getLeft(), Collections.singleton(Mutation.AOIU_MINUS));
 
@@ -408,6 +410,9 @@ public class Rules {
     private static Set<Mutation> targetLExpLogicalAndRExp(BinaryExpression target) {
         Set<Mutation> mutations = new HashSet<>(getDeletionMutations());
 
+        mutations.add(Mutation.COR_FALSE);
+        mutations.add(Mutation.COR_EQUAL);
+
         setMutationsTo(target.getLeft(), new HashSet<>());
         setMutationsTo(target.getRight(), new HashSet<>());
 
@@ -417,7 +422,8 @@ public class Rules {
     private static Set<Mutation> targetLExpLogicalOrRExp(BinaryExpression target) {
         Set<Mutation> mutations = new HashSet<>(getDeletionMutations());
 
-        mutations.add(Mutation.COR_XOR);
+        mutations.add(Mutation.COR_TRUE);
+        mutations.add(Mutation.COR_NOTEQUAL);
 
         setMutationsTo(target.getLeft(), new HashSet<>());
         setMutationsTo(target.getRight(), new HashSet<>());
@@ -426,7 +432,10 @@ public class Rules {
     }
 
     private static Set<Mutation> targetLExpXorRExp(BinaryExpression target) {
-        Set<Mutation> mutations = Collections.singleton(Mutation.COR_OR);
+        Set<Mutation> mutations = new HashSet<>();
+
+        mutations.add(Mutation.COR_OR);
+        mutations.add(Mutation.COR_FALSE);
 
         setMutationsTo(target.getLeft(), new HashSet<>());
         setMutationsTo(target.getRight(), new HashSet<>());
@@ -503,6 +512,24 @@ public class Rules {
         mutations.add(Mutation.ROR_LESS);
 
         setMutationsTo(target.getLeft(), Collections.singleton(Mutation.AOIU_MINUS));
+        setMutationsTo(target.getRight(), new HashSet<>());
+
+        return mutations;
+    }
+
+    private static Set<Mutation> targetLExpEqualRExpBoolean(BinaryExpression target) {
+        Set<Mutation> mutations = new HashSet<>(getDeletionMutations());
+
+        setMutationsTo(target.getLeft(), new HashSet<>());
+        setMutationsTo(target.getRight(), new HashSet<>());
+
+        return mutations;
+    }
+
+    private static Set<Mutation> targetLExpNotEqualRExpBoolean(BinaryExpression target) {
+        Set<Mutation> mutations = new HashSet<>(getDeletionMutations());
+
+        setMutationsTo(target.getLeft(), new HashSet<>());
         setMutationsTo(target.getRight(), new HashSet<>());
 
         return mutations;
