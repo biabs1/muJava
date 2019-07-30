@@ -39,7 +39,7 @@ public class Rules {
     private static List<String> traditionalOperatorsEnabled = Collections.emptyList();
     private static File currentFile;
     private static MethodLevelMutator mutator;
-    private static Map<File, Map<ParseTree, Set<Mutation>>> fileTargets = new HashMap<>();
+    private static Map<File, Map<Integer, Set<Mutation>>> fileTargets = new HashMap<>();
 
 
     private static boolean operatorDisabled(String operator) {
@@ -64,22 +64,22 @@ public class Rules {
     }
 
     private static Optional<Set<Mutation>> getAllowedMutations(ParseTree target) {
-        Map<ParseTree, Set<Mutation>> currentFileTargets = getCurrentTargets();
+        Map<Integer, Set<Mutation>> currentFileTargets = getCurrentTargets();
 
         if (!currentFileTargets.keySet().contains(target)) {
             Optional<Set<Mutation>> allowedMutations = allowedMutationsFor(target);
 
             if (allowedMutations.isPresent()) {
-                currentFileTargets.put(target, allowedMutations.get());
+                currentFileTargets.put(target.getObjectID(), allowedMutations.get());
             } else {
                 return Optional.empty();
             }
         }
 
-        return Optional.of(currentFileTargets.get(target));
+        return Optional.of(currentFileTargets.get(target.getObjectID()));
     }
 
-    private static Map<ParseTree, Set<Mutation>> getCurrentTargets() {
+    private static Map<Integer, Set<Mutation>> getCurrentTargets() {
         if (!fileTargets.keySet().contains(currentFile)) {
             fileTargets.put(currentFile, new HashMap<>());
         }
@@ -532,9 +532,12 @@ public class Rules {
 
         if (operatorEnabled("ODL")) {
             mutations.add(Mutation.ODL_LEXP);
+            mutations.add(Mutation.ODL_REXP);
         } else if (operatorEnabled("VDL") || operatorEnabled("CDL")) {
             mutations.add(Mutation.VDL_LEXP);
+            mutations.add(Mutation.VDL_REXP);
             mutations.add(Mutation.CDL_LEXP);
+            mutations.add(Mutation.CDL_REXP);
         } else {
             mutations.add(Mutation.AORB_PLUS);
         }
@@ -791,10 +794,10 @@ public class Rules {
     }
 
     private static void setMutationsTo(Expression expression, Set<Mutation> mutations) {
-        getCurrentTargets().put(expression, mutations);
+        getCurrentTargets().put(expression.getObjectID(), mutations);
         if (expression instanceof UnaryExpression) {
             expression = ((UnaryExpression) expression).getExpression();
-            getCurrentTargets().put(expression, mutations);
+            getCurrentTargets().put(expression.getObjectID(), mutations);
         }
     }
 
