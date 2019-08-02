@@ -222,9 +222,6 @@ public class Rules {
         mutations.add(Mutation.ASRS_MOD);
         mutations.add(Mutation.ODL_ASSING);
 
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), new HashSet<>());
-
         return mutations;
     }
 
@@ -233,9 +230,7 @@ public class Rules {
 
         mutations.add(Mutation.ASRS_ADD);
         mutations.add(Mutation.ASRS_MOD);
-
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), new HashSet<>());
+        mutations.add(Mutation.ODL_ASSING);
 
         return mutations;
     }
@@ -244,10 +239,8 @@ public class Rules {
         Set<Mutation> mutations = new HashSet<>();
 
         mutations.add(Mutation.ASRS_DIV);
+        mutations.add(Mutation.ASRS_MOD);
         mutations.add(Mutation.ODL_ASSING);
-
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), Collections.singleton(Mutation.AOIU_MINUS));
 
 
         return mutations;
@@ -256,15 +249,9 @@ public class Rules {
     private static Set<Mutation> targetAssignmentDiv(AssignmentExpression target) {
         Set<Mutation> mutations = new HashSet<>();
 
-        mutations.add(Mutation.ASRS_MOD);
         mutations.add(Mutation.ASRS_MUL);
+        mutations.add(Mutation.ASRS_MOD);
         mutations.add(Mutation.ODL_ASSING);
-
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), new HashSet<>(Arrays.asList(
-                Mutation.AOIU_MINUS, Mutation.AOIS_PREDEC, Mutation.AOIS_PREINC
-        )));
-
 
         return mutations;
     }
@@ -277,12 +264,6 @@ public class Rules {
         mutations.add(Mutation.ASRS_MUL);
         mutations.add(Mutation.ASRS_DIV);
 
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), new HashSet<>(Arrays.asList(
-                Mutation.AOIS_PREDEC, Mutation.AOIS_PREINC
-        )));
-
-
         return mutations;
     }
 
@@ -292,12 +273,6 @@ public class Rules {
         mutations.add(Mutation.ASRS_LSH);
         mutations.add(Mutation.ODL_ASSING);
 
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), new HashSet<>(Arrays.asList(
-                Mutation.AOIU_MINUS, Mutation.AOIS_PREDEC, Mutation.AOIS_PREINC
-        )));
-
-
         return mutations;
     }
 
@@ -306,12 +281,6 @@ public class Rules {
 
         mutations.add(Mutation.ASRS_RSH);
 
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), new HashSet<>(Arrays.asList(
-                Mutation.AOIU_MINUS, Mutation.AOIS_PREDEC, Mutation.AOIS_PREINC
-        )));
-
-
         return mutations;
     }
 
@@ -319,10 +288,7 @@ public class Rules {
         Set<Mutation> mutations = new HashSet<>();
 
         mutations.add(Mutation.ASRS_RSH);
-
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), Collections.singleton(Mutation.AOIU_MINUS));
-
+        mutations.add(Mutation.ASRS_LSH);
 
         return mutations;
     }
@@ -331,12 +297,6 @@ public class Rules {
         Set<Mutation> mutations = new HashSet<>();
 
         mutations.add(Mutation.ODL_ASSING);
-
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), new HashSet<>(Arrays.asList(
-                Mutation.AOIU_MINUS, Mutation.AOIS_PREDEC, Mutation.AOIS_PREINC
-        )));
-
 
         return mutations;
     }
@@ -347,12 +307,6 @@ public class Rules {
         mutations.add(Mutation.ODL_ASSING);
         mutations.add(Mutation.ASRS_XOR);
 
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), new HashSet<>(Arrays.asList(
-                Mutation.AOIU_MINUS, Mutation.AOIS_PREDEC, Mutation.AOIS_PREINC
-        )));
-
-
         return mutations;
     }
 
@@ -361,10 +315,6 @@ public class Rules {
 
         mutations.add(Mutation.ASRS_OR);
 
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), new HashSet<>());
-
-
         return mutations;
     }
 
@@ -372,11 +322,6 @@ public class Rules {
         Set<Mutation> mutations = new HashSet<>();
 
         mutations.add(Mutation.AOIU_MINUS);
-        mutations.add(Mutation.AOIS_POSDEC);
-        mutations.add(Mutation.AOIS_POSINC);
-        mutations.add(Mutation.AOIS_PREDEC);
-        mutations.add(Mutation.AOIS_PREINC);
-        mutations.add(Mutation.LOI_BITNOT);
 
         return mutations;
     }
@@ -392,11 +337,7 @@ public class Rules {
     private static Set<Mutation> targetPlusExp(UnaryExpression target) {
         Set<Mutation> mutations = new HashSet<>();
 
-        setMutationsTo(target.getExpression(), Collections.emptySet());
-
-        if (operatorEnabled("LOI")) {
-            mutations.add(Mutation.LOI_BITNOT);
-        }
+        setMutationsTo(target.getExpression(), Collections.singleton(Mutation.LOI_BITNOT));
 
         return mutations;
     }
@@ -450,11 +391,7 @@ public class Rules {
     private static Set<Mutation> targetPosIncExp(UnaryExpression target) {
         Set<Mutation> mutations = new HashSet<>();
 
-        setMutationsTo(target.getExpression(), Collections.emptySet());
-
-        if (operatorEnabled("LOI")) {
-            mutations.add(Mutation.LOI_BITNOT);
-        }
+        setMutationsTo(target.getExpression(), Collections.singleton(Mutation.LOI_BITNOT));
 
         return mutations;
     }
@@ -462,11 +399,7 @@ public class Rules {
     private static Set<Mutation> targetPosDecExp(UnaryExpression target) {
         Set<Mutation> mutations = new HashSet<>();
 
-        setMutationsTo(target.getExpression(), Collections.emptySet());
-
-        if (operatorEnabled("LOI")) {
-            mutations.add(Mutation.LOI_BITNOT);
-        }
+        setMutationsTo(target.getExpression(), Collections.singleton(Mutation.LOI_BITNOT));
 
         return mutations;
     }
@@ -518,10 +451,6 @@ public class Rules {
             mutations.add(Mutation.AORB_MINUS);
         }
 
-
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), new HashSet<>());
-
       return mutations;
     }
 
@@ -543,17 +472,23 @@ public class Rules {
         }
 
 
-        setMutationsTo(target.getLeft(), Collections.singleton(Mutation.AOIU_MINUS));
-
         return mutations;
     }
 
     private static Set<Mutation> targetLExpTimesRExp(BinaryExpression target) {
-        Set<Mutation> mutations = new HashSet<>(getDeletionMutations());
+        Set<Mutation> mutations = new HashSet<>();
 
         mutations.add(Mutation.AORB_DIVIDE);
 
-        setMutationsTo(target.getLeft(), Collections.singleton(Mutation.AOIU_MINUS));
+        if (operatorEnabled("ODL")) {
+            mutations.add(Mutation.ODL_LEXP);
+            mutations.add(Mutation.ODL_REXP);
+        } else if (operatorEnabled("VDL") || operatorEnabled("CDL")) {
+            mutations.add(Mutation.VDL_LEXP);
+            mutations.add(Mutation.VDL_REXP);
+            mutations.add(Mutation.CDL_LEXP);
+            mutations.add(Mutation.CDL_REXP);
+        }
 
         return mutations;
     }
@@ -564,10 +499,13 @@ public class Rules {
         mutations.add(Mutation.AORB_MOD);
         mutations.add(Mutation.AORB_TIMES);
 
-        setMutationsTo(target.getLeft(), new HashSet<>(Arrays.asList(Mutation.AOIS_PREINC, Mutation.AOIS_PREDEC,
-                Mutation.AOIU_MINUS)));
+        if (operatorEnabled("ODL")) {
+                        mutations.add(Mutation.ODL_REXP);
+        } else if (operatorEnabled("VDL") || operatorEnabled("CDL")) {
+            mutations.add(Mutation.VDL_REXP);
+            mutations.add(Mutation.CDL_REXP);
+        }
 
-        setMutationsTo(target.getRight(), Collections.singleton(Mutation.AOIS_PREDEC));
 
         return mutations;
     }
@@ -579,19 +517,12 @@ public class Rules {
         mutations.add(Mutation.AORB_MINUS);
         mutations.add(Mutation.AORB_DIVIDE);
 
-        setMutationsTo(target.getLeft(), Collections.singleton(Mutation.AOIU_MINUS));
-
-        Set<Mutation> mutationsRExp = new HashSet<>();
-
-        mutationsRExp.add(Mutation.AOIS_PREDEC);
-
-        if (operatorEnabled("AOIS")) {
-            mutationsRExp.add(Mutation.AOIS_PREINC);
-        } else if (operatorEnabled("LOI")) {
-            mutationsRExp.add(Mutation.LOI_BITNOT);
+        if (operatorEnabled("ODL")) {
+            mutations.add(Mutation.ODL_LEXP);
+        } else if (operatorEnabled("VDL") || operatorEnabled("CDL")) {
+            mutations.add(Mutation.VDL_LEXP);
+            mutations.add(Mutation.CDL_LEXP);
         }
-
-        setMutationsTo(target.getRight(), mutationsRExp);
 
         return mutations;
     }
@@ -602,9 +533,6 @@ public class Rules {
         mutations.add(Mutation.COR_FALSE);
         mutations.add(Mutation.COR_EQUAL);
 
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), new HashSet<>());
-
         return mutations;
     }
 
@@ -613,9 +541,6 @@ public class Rules {
 
         mutations.add(Mutation.COR_TRUE);
         mutations.add(Mutation.COR_NOTEQUAL);
-
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), new HashSet<>());
 
         return mutations;
     }
@@ -626,20 +551,15 @@ public class Rules {
         mutations.add(Mutation.COR_OR);
         mutations.add(Mutation.COR_FALSE);
 
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), new HashSet<>());
-
         return mutations;
     }
 
     private static Set<Mutation> targetLExpGreaterRExp(BinaryExpression target) {
         Set<Mutation> mutations = new HashSet<>();
 
-        mutations.add(Mutation.ROR_GREATEREQUAL);
+        mutations.add(Mutation.ROR_FALSE);
         mutations.add(Mutation.ROR_NOTEQUAL);
-
-        setMutationsTo(target.getLeft(), new HashSet<>(Arrays.asList(Mutation.AOIS_PREDEC, Mutation.AOIU_MINUS)));
-        setMutationsTo(target.getRight(), new HashSet<>(Arrays.asList(Mutation.AOIU_MINUS, Mutation.LOI_BITNOT)));
+        mutations.add(Mutation.ROR_GREATEREQUAL);
 
         return mutations;
     }
@@ -647,11 +567,9 @@ public class Rules {
     private static Set<Mutation> targetLExpGreaterEqualRExp(BinaryExpression target) {
         Set<Mutation> mutations = new HashSet<>();
 
-        mutations.add(Mutation.ROR_GREATER);
+        mutations.add(Mutation.ROR_TRUE);
         mutations.add(Mutation.ROR_EQUAL);
-
-        setMutationsTo(target.getLeft(), new HashSet<>(Arrays.asList(Mutation.AOIU_MINUS, Mutation.LOI_BITNOT)));
-        setMutationsTo(target.getRight(), new HashSet<>(Arrays.asList(Mutation.AOIU_MINUS, Mutation.AOIS_PREDEC)));
+        mutations.add(Mutation.ROR_GREATER);
 
         return mutations;
     }
@@ -659,11 +577,9 @@ public class Rules {
     private static Set<Mutation> targetLExpLessRExp(BinaryExpression target) {
         Set<Mutation> mutations = new HashSet<>();
 
-        mutations.add(Mutation.ROR_LESSEQUAL);
+        mutations.add(Mutation.ROR_FALSE);
         mutations.add(Mutation.ROR_NOTEQUAL);
-
-        setMutationsTo(target.getLeft(), new HashSet<>(Arrays.asList(Mutation.AOIU_MINUS, Mutation.LOI_BITNOT)));
-        setMutationsTo(target.getRight(), new HashSet<>(Arrays.asList(Mutation.AOIU_MINUS, Mutation.AOIS_PREDEC)));
+        mutations.add(Mutation.ROR_LESSEQUAL);
 
         return mutations;
     }
@@ -671,11 +587,9 @@ public class Rules {
     private static Set<Mutation> targetLExpLessEqualRExp(BinaryExpression target) {
         Set<Mutation> mutations = new HashSet<>();
 
-        mutations.add(Mutation.ROR_LESS);
+        mutations.add(Mutation.ROR_TRUE);
         mutations.add(Mutation.ROR_EQUAL);
-
-        setMutationsTo(target.getLeft(), new HashSet<>(Arrays.asList(Mutation.AOIS_PREDEC, Mutation.AOIU_MINUS)));
-        setMutationsTo(target.getRight(), new HashSet<>(Arrays.asList(Mutation.AOIU_MINUS, Mutation.LOI_BITNOT)));
+        mutations.add(Mutation.ROR_LESS);
 
         return mutations;
     }
@@ -687,9 +601,6 @@ public class Rules {
         mutations.add(Mutation.ROR_GREATEREQUAL);
         mutations.add(Mutation.ROR_LESSEQUAL);
 
-        setMutationsTo(target.getLeft(), Collections.singleton(Mutation.AOIU_MINUS));
-        setMutationsTo(target.getRight(), new HashSet<>());
-
         return mutations;
     }
 
@@ -700,37 +611,21 @@ public class Rules {
         mutations.add(Mutation.ROR_GREATER);
         mutations.add(Mutation.ROR_LESS);
 
-        setMutationsTo(target.getLeft(), Collections.singleton(Mutation.AOIU_MINUS));
-        setMutationsTo(target.getRight(), new HashSet<>());
-
         return mutations;
     }
 
     private static Set<Mutation> targetLExpEqualRExpBoolean(BinaryExpression target) {
-        Set<Mutation> mutations = new HashSet<>(getDeletionMutations());
-
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), new HashSet<>());
-
-        return mutations;
+        return new HashSet<>(getDeletionMutations());
     }
 
     private static Set<Mutation> targetLExpNotEqualRExpBoolean(BinaryExpression target) {
-        Set<Mutation> mutations = new HashSet<>(getDeletionMutations());
-
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), new HashSet<>());
-
-        return mutations;
+        return new HashSet<>(getDeletionMutations());
     }
 
     private static Set<Mutation> targetLExpEqualObjectRExp(BinaryExpression target) {
         Set<Mutation> mutations = new HashSet<>();
 
         mutations.add(Mutation.ROR_NOTEQUAL);
-
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), new HashSet<>());
 
         return mutations;
     }
@@ -740,9 +635,6 @@ public class Rules {
 
         mutations.add(Mutation.ROR_EQUAL);
 
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), new HashSet<>());
-
         return mutations;
     }
 
@@ -751,28 +643,17 @@ public class Rules {
 
         mutations.add(Mutation.LOR_BITOR);
 
-        setMutationsTo(target.getLeft(), new HashSet<>());
-        setMutationsTo(target.getRight(), new HashSet<>());
-
         return mutations;
     }
 
     private static Set<Mutation> targetLExpBitAndRExp(BinaryExpression target) {
-        Set<Mutation> mutations = new HashSet<>(getDeletionMutations());
-
-        setMutationsTo(target.getLeft(), new HashSet<>(Arrays.asList(Mutation.AOIS_PREINC, Mutation.AOIS_PREDEC)));
-        setMutationsTo(target.getRight(), new HashSet<>(Arrays.asList(Mutation.AOIS_PREINC, Mutation.AOIS_PREDEC)));
-
-        return mutations;
+        return new HashSet<>(getDeletionMutations());
     }
 
     private static Set<Mutation> targetLExpBitOrRExp(BinaryExpression target) {
         Set<Mutation> mutations = new HashSet<>(getDeletionMutations());
 
         mutations.add(Mutation.LOR_BITXOR);
-
-        setMutationsTo(target.getLeft(), new HashSet<>(Arrays.asList(Mutation.AOIS_PREINC, Mutation.AOIS_PREDEC)));
-        setMutationsTo(target.getRight(), new HashSet<>(Arrays.asList(Mutation.AOIS_PREINC, Mutation.AOIS_PREDEC)));
 
         return mutations;
     }

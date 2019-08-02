@@ -136,6 +136,10 @@ public class ODL_Writer extends TraditionalMutantCodeWriter
    }
 
    private String getOriginalId(UnaryExpression p) {
+      if (p.isPostfix()) {
+         return "exp" + p.operatorString();
+      }
+
       return p.operatorString() + "exp";
    }
 
