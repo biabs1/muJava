@@ -145,10 +145,10 @@ public class ODL_Writer extends TraditionalMutantCodeWriter
 
    private String getLabel(AssignmentExpression p) {
 
-      return "ODL lexp = rexp";
+      return "ODL lhs = rhs";
    }
 
    private String getOriginalId(AssignmentExpression p) {
-      return "lexp " + p.operatorString() + " rexp";
+      return "lhs " + p.operatorString() + " rhs";
    }
 }
